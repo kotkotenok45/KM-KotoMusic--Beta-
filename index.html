@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotoMusic Beta 3.0 - AI Music Platform</title>
+    <title>KotoMusic Beta 3.0 - Музыкальная платформа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
     <style>
         :root {
             --primary: #6c5ce7;
@@ -365,7 +364,7 @@
             flex-wrap: wrap;
         }
 
-        .track-ai-badge {
+        .track-artist-badge {
             background: rgba(0, 201, 255, 0.15);
             color: var(--secondary);
             padding: 2px 8px;
@@ -467,7 +466,7 @@
             margin-bottom: 15px;
         }
 
-        .ai-model-badge {
+        .artist-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -752,7 +751,7 @@
         <!-- HEADER -->
         <header class="header">
             <div class="logo">
-                <i class="fas fa-robot logo-icon"></i>
+                <i class="fas fa-music logo-icon"></i>
                 <div class="logo-text">KotoMusic<span class="badge">BETA 3.0</span></div>
             </div>
             
@@ -812,7 +811,7 @@
                 <div id="upload-section-sidebar" class="upload-section hidden">
                     <h3 class="section-title"><i class="fas fa-cloud-upload-alt"></i> Загрузить трек</h3>
                     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">
-                        Загрузите свой AI-трек. Трек появится в общем доступе после проверки модератором.
+                        Загрузите свой музыкальный трек. Трек появится в общем доступе после проверки модератором.
                     </p>
                     <button class="upload-btn" id="open-upload-modal-btn">
                         <i class="fas fa-plus"></i> Загрузить новый трек
@@ -834,7 +833,7 @@
                 
                 <div class="current-track">
                     <div class="album-art-large" id="album-art-large">
-                        <i class="fas fa-robot"></i>
+                        <i class="fas fa-music"></i>
                     </div>
                     
                     <div class="track-details">
@@ -843,16 +842,13 @@
                             Загрузил: <span id="uploader-name">kotkotenok43</span> 
                             (<span id="uploader-username">@kotkotenok43</span>)
                         </div>
-                        <div class="ai-model-badge" id="ai-model-badge">
-                            <i class="fas fa-microchip"></i> Модель ИИ: <span id="ai-model-name">FUZZ-2.0</span>
+                        <div class="artist-badge" id="artist-badge">
+                            <i class="fas fa-user"></i> Исполнитель: <span id="artist-name">FUZZ-2.0</span>
                         </div>
                         
                         <div class="track-info-text mt-20">
                             <p style="color: var(--text-secondary); font-size: 15px;">
-                                Трек сгенерирован искусственным интеллектом. 
-                                <span style="color: var(--primary); font-weight: 600;">
-                                    Модель ИИ указана только в поле "Исполнитель".
-                                </span>
+                                Музыкальная платформа для творческих людей.
                             </p>
                         </div>
                     </div>
@@ -913,9 +909,9 @@
 
         <!-- FOOTER -->
         <footer class="footer">
-            <p>KotoMusic Beta 3.0 | Платформа для AI-музыки</p>
+            <p>KotoMusic Beta 3.0 | Музыкальная платформа</p>
             <p style="margin-top: 5px; font-size: 12px;">
-                Система модерации и управления пользователями (клиентская симуляция)
+                Система модерации и управления пользователями
             </p>
         </footer>
     </div>
@@ -975,27 +971,25 @@
     <div class="modal-overlay" id="upload-modal">
         <div class="modal-content">
             <button class="close-modal" id="close-upload-modal">&times;</button>
-            <h2 class="modal-title">Загрузить AI-трек</h2>
+            <h2 class="modal-title">Загрузить трек</h2>
             
             <form id="upload-track-form">
                 <div class="form-group">
                     <label class="form-label">Название трека</label>
-                    <input type="text" class="form-input" id="track-title-input" required placeholder="Моя AI композиция">
+                    <input type="text" class="form-input" id="track-title-input" required placeholder="Моя музыкальная композиция">
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Модель ИИ (будет отображаться как "Исполнитель")</label>
-                    <select class="form-input" id="ai-model-select" required>
+                    <label class="form-label">Исполнитель</label>
+                    <select class="form-input" id="artist-select" required>
                         <option value="FUZZ-2.0">FUZZ-2.0</option>
                         <option value="FUZZ-1.1 Pro">FUZZ-1.1 Pro</option>
                         <option value="FUZZ-1.0">FUZZ-1.0</option>
-                        <option value="Suno AI">Suno AI</option>
-                        <option value="Mubert">Mubert</option>
-                        <option value="AIVA">AIVA</option>
-                        <option value="Amper">Amper</option>
-                        <option value="Custom">Другая модель...</option>
+                        <option value="Коллектив">Коллектив</option>
+                        <option value="Сольный проект">Сольный проект</option>
+                        <option value="Custom">Другой исполнитель...</option>
                     </select>
-                    <input type="text" class="form-input mt-20 hidden" id="custom-ai-model" placeholder="Введите название модели ИИ">
+                    <input type="text" class="form-input mt-20 hidden" id="custom-artist" placeholder="Введите название исполнителя">
                 </div>
                 
                 <div class="form-group">
@@ -1029,17 +1023,16 @@
     <!-- ОСНОВНОЙ СКРИПТ -->
     <script>
         // ===================== КОНФИГУРАЦИЯ =====================
-        // ВАЖНО: Это клиентская симуляция. Для реального приложения нужен бэкенд!
         
         // Суперадмин (ваш аккаунт по умолчанию)
         const SUPER_ADMIN_USERNAME = "@kotkotenok43";
         
-        // Начальные данные (в реальном приложении хранятся в базе данных)
+        // Начальные данные
         let users = JSON.parse(localStorage.getItem('kotoMusicUsers')) || [
             {
                 id: 1,
                 email: "kotkotenok43@example.com",
-                password: "admin123", // В реальном приложении НИКОГДА не храните пароли в открытом виде!
+                password: "admin123",
                 displayName: "kotkotenok43",
                 username: "@kotkotenok43",
                 avatarColor: "#6c5ce7",
@@ -1054,16 +1047,16 @@
             {
                 id: 1,
                 title: "Замкнутый Круг",
-                artist: "FUZZ-2.0", // Здесь отображается модель ИИ
+                artist: "FUZZ-2.0",
                 uploaderId: 1,
                 uploaderDisplayName: "kotkotenok43",
                 uploaderUsername: "@kotkotenok43",
-                aiModel: "FUZZ-2.0",
-                url: "", // Вставьте прямую ссылку на MP3 для работы плеера
+                source: "FUZZ-2.0",
+                url: "",
                 coverColor: "#6c5ce7",
-                coverIcon: "fas fa-city",
+                coverIcon: "fas fa-music",
                 duration: "3:45",
-                status: "approved", // pending, approved, rejected
+                status: "approved",
                 uploadDate: "2024-01-10"
             },
             {
@@ -1073,10 +1066,10 @@
                 uploaderId: 1,
                 uploaderDisplayName: "kotkotenok43",
                 uploaderUsername: "@kotkotenok43",
-                aiModel: "FUZZ-2.0",
+                source: "FUZZ-2.0",
                 url: "",
                 coverColor: "#00c9ff",
-                coverIcon: "fas fa-paw",
+                coverIcon: "fas fa-music",
                 duration: "3:20",
                 status: "approved",
                 uploadDate: "2024-01-11"
@@ -1088,7 +1081,7 @@
         let currentTrackIndex = 0;
         let isPlaying = false;
         let isShuffled = false;
-        let repeatMode = 'none'; // 'none', 'one', 'all'
+        let repeatMode = 'none';
         
         // DOM элементы
         const audioPlayer = document.getElementById('audio-player');
@@ -1108,10 +1101,8 @@
         
         // ===================== ИНИЦИАЛИЗАЦИЯ =====================
         function initApp() {
-            // Загружаем данные из localStorage
             loadFromLocalStorage();
             
-            // Пытаемся автоматически войти, если есть сохраненная сессия
             const savedUserId = localStorage.getItem('currentUserId');
             if (savedUserId) {
                 const user = users.find(u => u.id.toString() === savedUserId);
@@ -1120,26 +1111,20 @@
                 }
             }
             
-            // Обновляем интерфейс
             updateUI();
             renderPlaylist();
             if (tracks.length > 0) {
                 loadTrack(0);
             }
             
-            // Настройка событий
             setupEventListeners();
             
-            // Настройка аудиоплеера
             audioPlayer.volume = 0.7;
             volumePercent.style.width = '70%';
-            
-            console.log("KotoMusic Beta 3.0 инициализирован. Текущие пользователи:", users.length);
         }
         
         // ===================== СИСТЕМА ПОЛЬЗОВАТЕЛЕЙ =====================
         function registerUser(email, password, displayName, username) {
-            // Проверяем, существует ли уже пользователь с таким email или username
             if (users.some(u => u.email === email)) {
                 return { success: false, message: "Пользователь с таким email уже существует" };
             }
@@ -1148,24 +1133,22 @@
                 return { success: false, message: "Пользователь с таким именем уже существует" };
             }
             
-            // Создаем нового пользователя (по умолчанию не одобрен)
             const newUser = {
                 id: Date.now(),
                 email,
-                password, // В реальном приложении пароль должен быть хеширован!
+                password,
                 displayName,
                 username,
                 avatarColor: getRandomColor(),
                 isSuperAdmin: false,
                 isAdmin: false,
-                isApproved: false, // Требуется одобрение администратора
+                isApproved: false,
                 joinedDate: new Date().toISOString().split('T')[0]
             };
             
             users.push(newUser);
             saveToLocalStorage();
             
-            // Автоматически входим после регистрации
             loginUser(newUser);
             
             return { 
@@ -1179,10 +1162,7 @@
             currentUser = user;
             localStorage.setItem('currentUserId', user.id.toString());
             
-            // Обновляем интерфейс
             updateUI();
-            
-            // Показываем уведомление
             showNotification(`Добро пожаловать, ${user.displayName}!`, 'success');
             
             return true;
@@ -1203,7 +1183,6 @@
             user.isApproved = true;
             saveToLocalStorage();
             
-            // Если это текущий пользователь, обновляем интерфейс
             if (currentUser && currentUser.id === userId) {
                 currentUser.isApproved = true;
                 updateUI();
@@ -1213,7 +1192,6 @@
         }
         
         function toggleAdminStatus(userId) {
-            // Может выполнять только суперадмин
             if (!currentUser || !currentUser.isSuperAdmin) {
                 showNotification("Только суперадмин может управлять администраторами", 'error');
                 return false;
@@ -1222,7 +1200,6 @@
             const user = users.find(u => u.id === userId);
             if (!user) return false;
             
-            // Суперадмина нельзя лишить прав
             if (user.isSuperAdmin) {
                 showNotification("Нельзя изменить права суперадмина", 'error');
                 return false;
@@ -1252,7 +1229,6 @@
             track.status = "rejected";
             saveToLocalStorage();
             
-            // Если трек был текущим, переходим к следующему
             if (tracks[currentTrackIndex] && tracks[currentTrackIndex].id === trackId) {
                 nextTrack();
             }
@@ -1263,7 +1239,7 @@
         }
         
         // ===================== СИСТЕМА ТРЕКОВ =====================
-        function uploadTrack(title, aiModel, url, coverUrl) {
+        function uploadTrack(title, artist, url, coverUrl) {
             if (!currentUser || !currentUser.isApproved) {
                 showNotification("Только одобренные пользователи могут загружать треки", 'error');
                 return false;
@@ -1272,30 +1248,28 @@
             const newTrack = {
                 id: Date.now(),
                 title,
-                artist: aiModel, // Модель ИИ отображается как исполнитель
+                artist: artist,
                 uploaderId: currentUser.id,
                 uploaderDisplayName: currentUser.displayName,
                 uploaderUsername: currentUser.username,
-                aiModel: aiModel,
+                source: artist,
                 url: url,
                 coverColor: currentUser.avatarColor,
                 coverIcon: "fas fa-music",
                 duration: "0:00",
-                status: "pending", // Ожидает модерации
+                status: "pending",
                 uploadDate: new Date().toISOString().split('T')[0]
             };
             
             tracks.push(newTrack);
             saveToLocalStorage();
             
-            // Если это первый трек пользователя и он админ, автоматически одобряем
             if (currentUser.isAdmin) {
                 newTrack.status = "approved";
             }
             
             showNotification("Трек загружен и отправлен на модерацию", 'success');
             
-            // Обновляем плейлист
             renderPlaylist();
             
             return true;
@@ -1304,43 +1278,35 @@
         function loadTrack(index) {
             if (tracks.length === 0) return;
             
-            // Фильтруем только одобренные треки
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
             
-            // Корректируем индекс, если он вне диапазона
             if (index < 0) index = approvedTracks.length - 1;
             if (index >= approvedTracks.length) index = 0;
             
             currentTrackIndex = index;
             const track = approvedTracks[index];
             
-            // Обновляем интерфейс
             document.getElementById('current-track-title').textContent = track.title;
             document.getElementById('current-track-artist').textContent = track.artist;
             document.getElementById('uploader-name').textContent = track.uploaderDisplayName;
             document.getElementById('uploader-username').textContent = track.uploaderUsername;
-            document.getElementById('ai-model-name').textContent = track.aiModel;
+            document.getElementById('artist-name').textContent = track.artist;
             
-            // Обновляем обложку
             const albumArt = document.getElementById('album-art-large');
             albumArt.style.background = track.coverColor || getRandomColor();
             albumArt.innerHTML = `<i class="${track.coverIcon || 'fas fa-music'}"></i>`;
             
-            // Загружаем аудио
             if (track.url) {
                 audioPlayer.src = track.url;
                 audioPlayer.load();
                 
-                // Сбрасываем прогресс
                 progress.style.width = '0%';
                 currentTimeEl.textContent = '0:00';
                 
-                // Обновляем длительность, когда аудио загрузится
                 audioPlayer.addEventListener('loadedmetadata', function onLoad() {
                     durationEl.textContent = formatTime(audioPlayer.duration);
                     
-                    // Сохраняем длительность в треке
                     if (!track.duration || track.duration === "0:00") {
                         track.duration = formatTime(audioPlayer.duration);
                         saveToLocalStorage();
@@ -1351,7 +1317,6 @@
                 }, { once: true });
             }
             
-            // Обновляем активный элемент в плейлисте
             updateActivePlaylistItem();
         }
         
@@ -1406,7 +1371,6 @@
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
             
-            // Если трек играет больше 3 секунд, перематываем в начало
             if (audioPlayer.currentTime > 3) {
                 audioPlayer.currentTime = 0;
                 return;
@@ -1439,23 +1403,19 @@
             const superAdminSection = document.getElementById('super-admin-section');
             
             if (currentUser) {
-                // Показать информацию о пользователе
                 userDisplay.classList.remove('hidden');
                 userAvatar.textContent = currentUser.displayName.charAt(0).toUpperCase();
                 userAvatar.style.background = currentUser.avatarColor || getRandomColor();
                 userDisplayName.textContent = currentUser.displayName;
                 userUsername.textContent = currentUser.username;
                 
-                // Обновить текст кнопки
                 authToggleBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Выйти';
                 authToggleBtn.onclick = logoutUser;
                 
-                // Показать/скрыть панель администратора
                 if (currentUser.isAdmin || currentUser.isSuperAdmin) {
                     adminPanel.classList.add('visible');
                     renderAdminPanel();
                     
-                    // Показать секцию управления админами только суперадмину
                     if (currentUser.isSuperAdmin) {
                         superAdminSection.classList.remove('hidden');
                     } else {
@@ -1465,14 +1425,12 @@
                     adminPanel.classList.remove('visible');
                 }
                 
-                // Показать секцию загрузки только одобренным пользователям
                 if (currentUser.isApproved) {
                     uploadSection.classList.remove('hidden');
                 } else {
                     uploadSection.classList.add('hidden');
                 }
             } else {
-                // Гость
                 userDisplay.classList.add('hidden');
                 authToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
                 authToggleBtn.onclick = () => authModal.style.display = 'flex';
@@ -1485,7 +1443,6 @@
         function renderPlaylist() {
             playlistEl.innerHTML = '';
             
-            // Фильтруем только одобренные треки
             const approvedTracks = tracks.filter(t => t.status === "approved");
             
             if (approvedTracks.length === 0) {
@@ -1515,7 +1472,7 @@
                     <div class="track-info">
                         <div class="track-title">${track.title}</div>
                         <div class="track-meta">
-                            <span class="track-ai-badge">${track.aiModel}</span>
+                            <span class="track-artist-badge">${track.artist}</span>
                             <span>${track.uploaderDisplayName}</span>
                         </div>
                     </div>
@@ -1532,7 +1489,6 @@
         }
         
         function renderAdminPanel() {
-            // Пользователи, ожидающие одобрения
             const pendingUsers = users.filter(u => !u.isApproved && !u.isSuperAdmin);
             const pendingUsersList = document.getElementById('pending-users-list');
             
@@ -1563,7 +1519,6 @@
                 });
             }
             
-            // Треки, ожидающие модерации
             const pendingTracks = tracks.filter(t => t.status === "pending");
             const pendingTracksList = document.getElementById('pending-tracks-list');
             
@@ -1579,7 +1534,7 @@
                         <div style="flex: 1;">
                             <div style="font-weight: 600; margin-bottom: 5px;">${track.title}</div>
                             <div style="font-size: 13px; color: var(--text-secondary);">
-                                Модель: ${track.aiModel} | 
+                                Исполнитель: ${track.artist} | 
                                 Загрузил: ${uploader ? uploader.displayName : 'Неизвестно'}
                             </div>
                         </div>
@@ -1596,7 +1551,6 @@
                 });
             }
             
-            // Список администраторов (только для суперадмина)
             if (currentUser && currentUser.isSuperAdmin) {
                 const admins = users.filter(u => u.isAdmin || u.isSuperAdmin);
                 const adminsList = document.getElementById('admins-list');
@@ -1661,7 +1615,6 @@
         }
         
         function showNotification(message, type = 'info') {
-            // Создаем уведомление
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
@@ -1683,7 +1636,6 @@
             
             document.body.appendChild(notification);
             
-            // Удаляем уведомление через 3 секунды
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease';
                 setTimeout(() => {
@@ -1709,7 +1661,6 @@
         
         // ===================== НАСТРОЙКА СОБЫТИЙ =====================
         function setupEventListeners() {
-            // Аудиоплеер
             audioPlayer.addEventListener('timeupdate', () => {
                 const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
                 progress.style.width = `${percent}%`;
@@ -1718,7 +1669,6 @@
             
             audioPlayer.addEventListener('ended', nextTrack);
             
-            // Кнопки управления
             playPauseBtn.addEventListener('click', () => {
                 if (isPlaying) {
                     pauseTrack();
@@ -1730,7 +1680,6 @@
             nextBtn.addEventListener('click', nextTrack);
             prevBtn.addEventListener('click', prevTrack);
             
-            // Прогресс-бар
             progressBar.addEventListener('click', (e) => {
                 const width = progressBar.clientWidth;
                 const clickX = e.offsetX;
@@ -1741,7 +1690,6 @@
                 }
             });
             
-            // Громкость
             volumeSlider.addEventListener('click', (e) => {
                 const width = volumeSlider.clientWidth;
                 const clickX = e.offsetX;
@@ -1750,7 +1698,6 @@
                 audioPlayer.volume = volume;
                 volumePercent.style.width = `${volume * 100}%`;
                 
-                // Обновление иконки громкости
                 if (volume === 0) {
                     volumeIcon.className = 'fas fa-volume-mute';
                 } else if (volume < 0.5) {
@@ -1760,7 +1707,6 @@
                 }
             });
             
-            // Модальные окна
             document.getElementById('auth-toggle-btn').addEventListener('click', () => {
                 if (!currentUser) {
                     authModal.style.display = 'flex';
@@ -1779,16 +1725,13 @@
                 uploadModal.style.display = 'flex';
             });
             
-            // Вкладки в модальном окне
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const tabId = tab.getAttribute('data-tab');
                     
-                    // Активируем вкладку
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     
-                    // Показываем соответствующий контент
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
@@ -1796,7 +1739,6 @@
                 });
             });
             
-            // Форма входа
             document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -1814,7 +1756,6 @@
                 }
             });
             
-            // Форма регистрации
             document.getElementById('register-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -1823,7 +1764,6 @@
                 const displayName = document.getElementById('register-display-name').value;
                 const username = document.getElementById('register-username').value;
                 
-                // Проверяем формат username
                 if (!username.startsWith('@')) {
                     showNotification("Имя пользователя должно начинаться с @", 'error');
                     return;
@@ -1835,7 +1775,6 @@
                     authModal.style.display = 'none';
                     document.getElementById('register-form').reset();
                     
-                    // Если это суперадмин, автоматически одобряем
                     if (username === SUPER_ADMIN_USERNAME) {
                         const user = users.find(u => u.username === username);
                         if (user) {
@@ -1851,27 +1790,25 @@
                 }
             });
             
-            // Форма загрузки трека
             document.getElementById('upload-track-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
                 const title = document.getElementById('track-title-input').value;
-                const aiModel = document.getElementById('ai-model-select').value === 'Custom' 
-                    ? document.getElementById('custom-ai-model').value 
-                    : document.getElementById('ai-model-select').value;
+                const artist = document.getElementById('artist-select').value === 'Custom' 
+                    ? document.getElementById('custom-artist').value 
+                    : document.getElementById('artist-select').value;
                 const url = document.getElementById('track-url-input').value;
                 const coverUrl = document.getElementById('track-cover-input').value;
                 
-                if (uploadTrack(title, aiModel, url, coverUrl)) {
+                if (uploadTrack(title, artist, url, coverUrl)) {
                     uploadModal.style.display = 'none';
                     document.getElementById('upload-track-form').reset();
-                    renderAdminPanel(); // Обновляем панель администратора
+                    renderAdminPanel();
                 }
             });
             
-            // Переключение выбора модели ИИ
-            document.getElementById('ai-model-select').addEventListener('change', (e) => {
-                const customInput = document.getElementById('custom-ai-model');
+            document.getElementById('artist-select').addEventListener('change', (e) => {
+                const customInput = document.getElementById('custom-artist');
                 if (e.target.value === 'Custom') {
                     customInput.classList.remove('hidden');
                 } else {
@@ -1879,9 +1816,7 @@
                 }
             });
             
-            // Делегирование событий для панели администратора
             document.addEventListener('click', (e) => {
-                // Одобрение пользователя
                 if (e.target.classList.contains('approve') && e.target.hasAttribute('data-user-id')) {
                     const userId = parseInt(e.target.getAttribute('data-user-id'));
                     if (approveUser(userId)) {
@@ -1891,7 +1826,6 @@
                     }
                 }
                 
-                // Управление администраторами
                 if (e.target.classList.contains('admin') && e.target.hasAttribute('data-user-id')) {
                     const userId = parseInt(e.target.getAttribute('data-user-id'));
                     if (toggleAdminStatus(userId)) {
@@ -1900,7 +1834,6 @@
                     }
                 }
                 
-                // Модерация треков
                 if (e.target.classList.contains('approve') && e.target.hasAttribute('data-track-id')) {
                     const trackId = parseInt(e.target.getAttribute('data-track-id'));
                     if (approveTrack(trackId)) {
@@ -1918,7 +1851,6 @@
                 }
             });
             
-            // Горячие клавиши
             document.addEventListener('keydown', (e) => {
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
                 
@@ -1956,7 +1888,6 @@
         // ===================== ЗАПУСК ПРИЛОЖЕНИЯ =====================
         document.addEventListener('DOMContentLoaded', initApp);
         
-        // Добавляем CSS анимации
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
