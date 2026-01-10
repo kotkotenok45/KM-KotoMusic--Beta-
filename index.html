@@ -3,55 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotoMusic Beta 3.0 - Музыкальная платформа</title>
+    <title>KotoMusic Glass — Музыкальная платформа</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6c5ce7;
-            --primary-dark: #5649c4;
-            --secondary: #00c9ff;
-            --danger: #ff6b6b;
-            --success: #00b894;
-            --dark-bg: #0a0a1a;
-            --darker-bg: #050510;
-            --card-bg: rgba(30, 30, 60, 0.7);
+            --glass-bg: rgba(20, 20, 35, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --primary-glow: rgba(108, 92, 231, 0.4);
+            --secondary-glow: rgba(0, 201, 255, 0.3);
+            --accent: #6c5ce7;
+            --accent-light: #8a7cff;
+            --accent-dark: #5649c4;
             --text: #ffffff;
-            --text-secondary: #aaaacc;
+            --text-secondary: #b0b0d0;
+            --success: #00b894;
+            --danger: #ff6b6b;
+            --warning: #fdcb6e;
+            --bg-gradient: linear-gradient(135deg, #0a0a15 0%, #1a1a2e 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
             color: var(--text);
             min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--primary-glow) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, var(--secondary-glow) 0%, transparent 40%);
+            z-index: -1;
+            opacity: 0.5;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            padding: 20px;
         }
 
-        /* HEADER */
-        .header {
-            background: rgba(20, 20, 40, 0.9);
-            backdrop-filter: blur(10px);
+        /* Glass Card Base */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 20px 30px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(100, 100, 255, 0.2);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Header */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            padding: 20px 0;
+            margin-bottom: 30px;
         }
 
         .logo {
@@ -61,45 +91,60 @@
         }
 
         .logo-icon {
-            font-size: 32px;
-            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px var(--primary-glow);
         }
 
         .logo-text {
             font-size: 28px;
             font-weight: 800;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.5px;
         }
 
-        .badge {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-left: 10px;
+        .logo-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .user-section {
+        /* User Profile */
+        .user-profile {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .user-avatar {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
         }
 
         .user-info {
@@ -108,479 +153,444 @@
         }
 
         .user-display-name {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 16px;
         }
 
         .user-username {
             font-size: 13px;
             color: var(--text-secondary);
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
         }
 
-        .auth-btn {
-            background: rgba(100, 100, 255, 0.15);
-            border: 1px solid rgba(100, 100, 255, 0.3);
-            color: #8a7cff;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .auth-btn:hover {
-            background: rgba(100, 100, 255, 0.25);
-            transform: translateY(-2px);
-        }
-
-        /* MAIN LAYOUT */
+        /* Main Layout */
         .main-layout {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 350px 1fr 350px;
             gap: 25px;
-            min-height: 75vh;
+            margin-bottom: 30px;
         }
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1400px) {
+            .main-layout {
+                grid-template-columns: 300px 1fr;
+            }
+            .right-sidebar {
+                grid-column: 1 / -1;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* SIDEBAR */
-        .sidebar {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+        /* Sidebar */
+        .sidebar-section {
             padding: 25px;
-            border: 1px solid rgba(100, 100, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
         }
 
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary);
+            margin-bottom: 20px;
+            color: var(--accent-light);
             display: flex;
             align-items: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* AUTH MODAL */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .section-title i {
+            font-size: 18px;
         }
 
-        .modal-content {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 450px;
-            border: 1px solid rgba(100, 100, 255, 0.3);
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: var(--primary);
-            text-align: center;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            border-bottom-color: var(--primary);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(100, 100, 255, 0.2);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .btn {
-            padding: 14px 24px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* PLAYLIST */
+        /* Playlist */
         .playlist {
-            list-style: none;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
-            flex: 1;
+            padding-right: 10px;
+        }
+
+        .playlist::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .playlist::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .playlist::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
         }
 
         .playlist-item {
+            display: flex;
+            align-items: center;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
             cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .playlist-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             transform: translateX(5px);
         }
 
         .playlist-item.active {
-            background: rgba(108, 92, 231, 0.2);
-            border-left: 4px solid var(--primary);
+            background: rgba(108, 92, 231, 0.15);
+            border-left: 4px solid var(--accent);
         }
 
-        .track-cover {
-            width: 50px;
-            height: 50px;
+        .track-number {
+            width: 30px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .track-cover-small {
+            width: 45px;
+            height: 45px;
             border-radius: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
+            margin-right: 15px;
+            font-size: 18px;
         }
 
-        .track-info {
+        .track-info-small {
             flex: 1;
             min-width: 0;
         }
 
-        .track-title {
+        .track-title-small {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .track-meta {
-            font-size: 13px;
+        .track-meta-small {
+            font-size: 12px;
             color: var(--text-secondary);
             display: flex;
-            align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .track-artist-badge {
-            background: rgba(0, 201, 255, 0.15);
-            color: var(--secondary);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
         }
 
         .track-duration {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
-            flex-shrink: 0;
+            font-weight: 500;
         }
 
-        /* PLAYER */
+        /* Player */
         .player-section {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
             padding: 30px;
-            border: 1px solid rgba(100, 100, 255, 0.1);
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .now-playing-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 30px;
         }
 
-        .now-playing-title {
-            font-size: 14px;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .current-track {
+        .now-playing-badge {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--accent-light);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 25px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            gap: 8px;
+            letter-spacing: 1px;
         }
 
-        .album-art-large {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
+        .player-status {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Album Art */
+        .album-art-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 40px;
+        }
+
+        .album-art-glass {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            color: white;
+            font-size: 80px;
+            position: relative;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        @media (max-width: 768px) {
-            .album-art-large {
-                width: 150px;
-                height: 150px;
-                font-size: 36px;
-            }
+        .album-art-glass::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+            border-radius: 20px;
         }
 
-        .track-details {
-            flex: 1;
-            min-width: 300px;
+        /* Track Info */
+        .track-info-large {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         .track-title-large {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             margin-bottom: 10px;
             line-height: 1.2;
+            background: linear-gradient(90deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         @media (max-width: 768px) {
             .track-title-large {
-                font-size: 24px;
+                font-size: 28px;
             }
         }
 
         .track-artist {
-            font-size: 20px;
-            color: var(--primary);
-            margin-bottom: 5px;
+            font-size: 22px;
+            color: var(--accent-light);
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .track-uploader {
             font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
 
-        .artist-badge {
+        .artist-chip {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background: rgba(0, 201, 255, 0.2);
-            color: var(--secondary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
+            gap: 8px;
+            background: rgba(0, 201, 255, 0.15);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid rgba(0, 201, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
-        .player-controls {
-            margin-top: auto;
-        }
-
-        .progress-area {
+        /* Progress Bar */
+        .progress-container {
             margin-bottom: 25px;
         }
 
         .progress-bar {
-            height: 8px;
+            height: 6px;
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             margin-bottom: 10px;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
             border-radius: 10px;
             position: relative;
             transition: width 0.1s linear;
         }
 
-        .timer {
+        .progress::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 15px var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .progress-bar:hover .progress::after {
+            opacity: 1;
+        }
+
+        .time-display {
             display: flex;
             justify-content: space-between;
             font-size: 14px;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
-        .controls-row {
+        /* Controls */
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: auto;
+        }
+
+        .controls-main {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 25px;
-            margin-bottom: 20px;
         }
 
         .control-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--text);
-            font-size: 22px;
-            cursor: pointer;
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .play-pause-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             width: 70px;
             height: 70px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             font-size: 28px;
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+            border: none;
         }
 
         .play-pause-btn:hover {
             transform: scale(1.15);
+            box-shadow: 0 12px 35px rgba(108, 92, 231, 0.6);
         }
 
-        .volume-area {
+        .controls-secondary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .volume-container {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-top: 25px;
+            flex: 1;
         }
 
         .volume-slider {
             flex: 1;
-            height: 6px;
+            height: 5px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             cursor: pointer;
+            position: relative;
         }
 
-        .volume-percent {
-            width: 70%;
+        .volume-level {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 70%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
             border-radius: 10px;
         }
 
-        /* ADMIN PANEL */
+        /* Right Sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Admin Panel */
         .admin-panel {
-            background: rgba(10, 10, 30, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid var(--primary);
             display: none;
         }
 
@@ -597,11 +607,9 @@
         }
 
         .admin-list {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
+            padding-right: 10px;
         }
 
         .admin-item {
@@ -609,122 +617,311 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .admin-item:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
 
-        .user-display {
+        .admin-user-info {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .user-avatar-small {
-            width: 36px;
-            height: 36px;
+        .user-avatar-tiny {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .admin-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .action-btn {
             padding: 6px 12px;
             border-radius: 6px;
-            border: none;
+            border: 1px solid;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
             transition: all 0.2s;
+            background: transparent;
         }
 
         .action-btn.approve {
-            background: rgba(0, 184, 148, 0.2);
             color: var(--success);
-            border: 1px solid rgba(0, 184, 148, 0.3);
+            border-color: rgba(0, 184, 148, 0.3);
+        }
+
+        .action-btn.approve:hover {
+            background: rgba(0, 184, 148, 0.1);
         }
 
         .action-btn.deny {
-            background: rgba(255, 107, 107, 0.2);
             color: var(--danger);
-            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .action-btn.deny:hover {
+            background: rgba(255, 107, 107, 0.1);
         }
 
         .action-btn.admin {
-            background: rgba(108, 92, 231, 0.2);
-            color: var(--primary);
-            border: 1px solid rgba(108, 92, 231, 0.3);
+            color: var(--accent);
+            border-color: rgba(108, 92, 231, 0.3);
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
+        .action-btn.admin:hover {
+            background: rgba(108, 92, 231, 0.1);
         }
 
         .status-badge {
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .status-pending {
-            background: rgba(253, 203, 110, 0.2);
-            color: #fdcb6e;
+            background: rgba(253, 203, 110, 0.15);
+            color: var(--warning);
         }
 
         .status-approved {
-            background: rgba(0, 184, 148, 0.2);
+            background: rgba(0, 184, 148, 0.15);
             color: var(--success);
         }
 
         .status-admin {
-            background: rgba(108, 92, 231, 0.2);
-            color: var(--primary);
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--accent-light);
         }
 
+        /* Upload Section */
         .upload-section {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px dashed rgba(100, 100, 255, 0.3);
+            text-align: center;
+            padding: 25px;
+        }
+
+        .upload-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.15);
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--accent);
         }
 
         .upload-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
             border: none;
-            cursor: pointer;
+            padding: 12px 30px;
+            border-radius: 50px;
             font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 15px;
+            margin: 20px auto 0;
+            transition: all 0.3s;
         }
 
-        /* FOOTER */
-        .footer {
-            text-align: center;
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+        }
+
+        /* Modal Windows */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-top: 25px;
         }
 
-        /* UTILITY */
+        .modal-content {
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--accent-light);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--accent-light);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Utility */
         .hidden {
             display: none !important;
         }
@@ -744,183 +941,290 @@
         .mb-20 {
             margin-bottom: 20px;
         }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 30px;
+        }
+
+        /* Visualizer */
+        .visualizer {
+            height: 80px;
+            margin: 30px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 20px;
+        }
+
+        .viz-bar {
+            width: 10px;
+            background: linear-gradient(to top, var(--accent), var(--accent-light));
+            border-radius: 4px 4px 0 0;
+            animation: equalizer 1.5s ease infinite alternate;
+        }
+
+        .viz-bar:nth-child(odd) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes equalizer {
+            0% { height: 20%; }
+            100% { height: 100%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .user-profile {
+                justify-content: center;
+            }
+            
+            .album-art-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .track-title-large {
+                font-size: 28px;
+            }
+            
+            .track-artist {
+                font-size: 18px;
+            }
+            
+            .controls-main {
+                gap: 15px;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .play-pause-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
+        <!-- Header -->
         <header class="header">
             <div class="logo">
-                <i class="fas fa-music logo-icon"></i>
-                <div class="logo-text">KotoMusic<span class="badge">BETA 3.0</span></div>
+                <div class="logo-icon glass-card">
+                    <i class="fas fa-wave-square"></i>
+                </div>
+                <div>
+                    <div class="logo-text">KotoMusic</div>
+                    <div class="logo-subtitle">Glass Edition</div>
+                </div>
             </div>
             
-            <div class="user-section">
-                <div id="user-display" class="hidden">
-                    <div class="user-avatar" id="user-avatar">K</div>
-                    <div class="user-info">
-                        <div class="user-display-name" id="user-display-name">Гость</div>
-                        <div class="user-username" id="user-username">@guest</div>
-                    </div>
+            <div class="user-profile">
+                <div class="user-avatar glass-card" id="user-avatar">K</div>
+                <div class="user-info">
+                    <div class="user-display-name" id="user-display-name">Гость</div>
+                    <div class="user-username" id="user-username">@guest</div>
                 </div>
-                <button class="auth-btn" id="auth-toggle-btn">
-                    <i class="fas fa-sign-in-alt"></i> Войти
+                <button class="control-btn" id="auth-toggle-btn" title="Войти">
+                    <i class="fas fa-sign-in-alt"></i>
                 </button>
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
+        <!-- Main Layout -->
         <div class="main-layout">
-            <!-- SIDEBAR -->
-            <aside class="sidebar">
-                <div>
+            <!-- Left Sidebar -->
+            <aside class="left-sidebar">
+                <div class="sidebar-section glass-card">
                     <h3 class="section-title"><i class="fas fa-list-music"></i> Плейлист</h3>
-                    <ul class="playlist" id="playlist">
-                        <!-- Заполняется JavaScript -->
-                    </ul>
+                    <div class="playlist" id="playlist">
+                        <!-- Playlist items will be inserted here by JavaScript -->
+                    </div>
                 </div>
                 
-                <!-- Панель администратора (видна только админам) -->
+                <!-- Admin Panel (visible only to admins) -->
                 <div id="admin-panel-sidebar" class="admin-panel">
-                    <h3 class="section-title"><i class="fas fa-user-shield"></i> Панель администратора</h3>
-                    
-                    <div class="admin-section">
-                        <h4>Пользователи на модерации</h4>
-                        <div class="admin-list" id="pending-users-list">
-                            <!-- Список пользователей, ожидающих одобрения -->
+                    <div class="sidebar-section glass-card">
+                        <h3 class="section-title"><i class="fas fa-user-shield"></i> Модерация</h3>
+                        
+                        <div class="admin-section">
+                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">Ожидают одобрения</h4>
+                            <div class="admin-list" id="pending-users-list">
+                                <!-- Pending users list -->
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">Треки на проверке</h4>
+                            <div class="admin-list" id="pending-tracks-list">
+                                <!-- Pending tracks list -->
+                            </div>
+                        </div>
+                        
+                        <!-- Super Admin Section (only for @kotkotenok43) -->
+                        <div class="admin-section" id="super-admin-section">
+                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--accent-light);">
+                                <i class="fas fa-crown"></i> Управление администраторами
+                            </h4>
+                            <div class="admin-list" id="admins-list">
+                                <!-- Admins list -->
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="admin-section">
-                        <h4>Треки на модерации</h4>
-                        <div class="admin-list" id="pending-tracks-list">
-                            <!-- Список треков, ожидающих одобрения -->
-                        </div>
-                    </div>
-                    
-                    <!-- Только для суперадмина (@kotkotenok43) -->
-                    <div class="admin-section" id="super-admin-section">
-                        <h4><i class="fas fa-crown"></i> Управление администраторами</h4>
-                        <div class="admin-list" id="admins-list">
-                            <!-- Список администраторов -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Секция загрузки (видна только одобренным пользователям) -->
-                <div id="upload-section-sidebar" class="upload-section hidden">
-                    <h3 class="section-title"><i class="fas fa-cloud-upload-alt"></i> Загрузить трек</h3>
-                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">
-                        Загрузите свой музыкальный трек. Трек появится в общем доступе после проверки модератором.
-                    </p>
-                    <button class="upload-btn" id="open-upload-modal-btn">
-                        <i class="fas fa-plus"></i> Загрузить новый трек
-                    </button>
                 </div>
             </aside>
 
-            <!-- PLAYER -->
-            <main class="player-section">
+            <!-- Main Player -->
+            <main class="player-section glass-card">
                 <div class="now-playing-header">
-                    <div>
-                        <div class="now-playing-title">Сейчас играет</div>
-                        <h2 id="current-track-title" style="font-size: 24px; font-weight: 700;">Замкнутый Круг</h2>
+                    <div class="now-playing-badge">
+                        <i class="fas fa-play-circle"></i> СЕЙЧАС ИГРАЕТ
                     </div>
-                    <div id="player-status" style="color: var(--secondary); font-size: 14px;">
-                        <i class="fas fa-circle" style="font-size: 10px;"></i> Остановлено
+                    <div class="player-status">
+                        <div class="player-status-dot"></div>
+                        <span id="player-status-text">Остановлено</span>
                     </div>
                 </div>
                 
-                <div class="current-track">
-                    <div class="album-art-large" id="album-art-large">
+                <!-- Album Art -->
+                <div class="album-art-container">
+                    <div class="album-art-glass" id="album-art-glass">
                         <i class="fas fa-music"></i>
                     </div>
-                    
-                    <div class="track-details">
-                        <div class="track-artist" id="current-track-artist">FUZZ-2.0</div>
-                        <div class="track-uploader" id="current-track-uploader">
-                            Загрузил: <span id="uploader-name">kotkotenok43</span> 
-                            (<span id="uploader-username">@kotkotenok43</span>)
-                        </div>
-                        <div class="artist-badge" id="artist-badge">
-                            <i class="fas fa-user"></i> Исполнитель: <span id="artist-name">FUZZ-2.0</span>
-                        </div>
-                        
-                        <div class="track-info-text mt-20">
-                            <p style="color: var(--text-secondary); font-size: 15px;">
-                                Музыкальная платформа для творческих людей.
-                            </p>
-                        </div>
+                </div>
+                
+                <!-- Track Info -->
+                <div class="track-info-large">
+                    <h1 class="track-title-large" id="current-track-title">Замкнутый Круг</h1>
+                    <div class="track-artist" id="current-track-artist">FUZZ-2.0</div>
+                    <div class="track-uploader" id="current-track-uploader">
+                        Загрузил: <span id="uploader-name">kotkotenok43</span> 
+                        (<span id="uploader-username">@kotkotenok43</span>)
+                    </div>
+                    <div class="artist-chip">
+                        <i class="fas fa-user"></i> Исполнитель: <span id="artist-name">FUZZ-2.0</span>
                     </div>
                 </div>
                 
-                <!-- Визуализатор -->
-                <div style="height: 100px; margin: 30px 0; border-radius: 10px; background: rgba(0,0,0,0.2); 
-                         display: flex; align-items: flex-end; justify-content: center; gap: 3px; padding: 0 10px;">
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 10%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 30%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 60%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 90%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 40%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 70%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 20%;"></div>
-                    <div class="viz-bar" style="width: 8px; background: var(--primary); border-radius: 4px 4px 0 0; height: 80%;"></div>
+                <!-- Visualizer -->
+                <div class="visualizer">
+                    <div class="viz-bar" style="height: 30%;"></div>
+                    <div class="viz-bar" style="height: 60%;"></div>
+                    <div class="viz-bar" style="height: 90%;"></div>
+                    <div class="viz-bar" style="height: 40%;"></div>
+                    <div class="viz-bar" style="height: 70%;"></div>
+                    <div class="viz-bar" style="height: 20%;"></div>
+                    <div class="viz-bar" style="height: 80%;"></div>
+                    <div class="viz-bar" style="height: 50%;"></div>
                 </div>
                 
-                <!-- Элементы управления -->
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="current-time">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+                
+                <!-- Player Controls -->
                 <div class="player-controls">
-                    <div class="progress-area">
-                        <div class="progress-bar" id="progress-bar">
-                            <div class="progress" id="progress"></div>
-                        </div>
-                        <div class="timer">
-                            <span id="current-time">0:00</span>
-                            <span id="duration">0:00</span>
-                        </div>
-                    </div>
-                    
-                    <div class="controls-row">
-                        <button class="control-btn" id="prev-btn" title="Предыдущий трек">
+                    <div class="controls-main">
+                        <button class="control-btn" id="shuffle-btn" title="Перемешать">
+                            <i class="fas fa-random"></i>
+                        </button>
+                        <button class="control-btn" id="prev-btn" title="Предыдущий">
                             <i class="fas fa-step-backward"></i>
                         </button>
                         <button class="control-btn play-pause-btn" id="play-pause-btn" title="Воспроизвести">
                             <i class="fas fa-play"></i>
                         </button>
-                        <button class="control-btn" id="next-btn" title="Следующий трек">
+                        <button class="control-btn" id="next-btn" title="Следующий">
                             <i class="fas fa-step-forward"></i>
-                        </button>
-                        <button class="control-btn" id="shuffle-btn" title="Перемешать">
-                            <i class="fas fa-random"></i>
                         </button>
                         <button class="control-btn" id="repeat-btn" title="Повтор">
                             <i class="fas fa-redo"></i>
                         </button>
                     </div>
                     
-                    <div class="volume-area">
-                        <i class="fas fa-volume-up" id="volume-icon" style="color: var(--primary);"></i>
-                        <div class="volume-slider" id="volume-slider">
-                            <div class="volume-percent" id="volume-percent"></div>
+                    <div class="controls-secondary">
+                        <div class="volume-container">
+                            <i class="fas fa-volume-up" id="volume-icon" style="color: var(--accent);"></i>
+                            <div class="volume-slider" id="volume-slider">
+                                <div class="volume-level" id="volume-level"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </main>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <!-- Upload Section (visible only to approved users) -->
+                <div id="upload-section-sidebar" class="sidebar-section glass-card hidden">
+                    <div class="upload-section">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 style="font-size: 18px; margin-bottom: 10px; font-weight: 700;">Загрузить трек</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
+                            Поделитесь своей музыкой с сообществом. После проверки модератором трек появится в плейлисте.
+                        </p>
+                        <button class="upload-btn" id="open-upload-modal-btn">
+                            <i class="fas fa-plus"></i> Новый трек
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Currently Playing Info -->
+                <div class="sidebar-section glass-card">
+                    <h3 class="section-title"><i class="fas fa-info-circle"></i> О треке</h3>
+                    <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+                        <p style="margin-bottom: 15px;">Текущий трек загружен через систему модерации KotoMusic.</p>
+                        <div style="background: rgba(108, 92, 231, 0.1); padding: 15px; border-radius: 12px;">
+                            <p style="margin: 0; font-size: 13px;">
+                                <i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 8px;"></i>
+                                Все треки проходят проверку перед публикацией.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
 
-        <!-- FOOTER -->
+        <!-- Footer -->
         <footer class="footer">
-            <p>KotoMusic Beta 3.0 | Музыкальная платформа</p>
-            <p style="margin-top: 5px; font-size: 12px;">
-                Система модерации и управления пользователями
+            <p>KotoMusic Glass Edition | Музыкальная платформа с системой модерации</p>
+            <p style="margin-top: 5px; font-size: 12px; opacity: 0.7;">
+                Интерфейс в стиле Glassmorphism | Все права защищены
             </p>
         </footer>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ -->
+    <!-- Auth Modal -->
     <div class="modal-overlay" id="auth-modal">
-        <div class="modal-content">
+        <div class="modal-content glass-card">
             <button class="close-modal" id="close-auth-modal">&times;</button>
-            <h2 class="modal-title">Вход / Регистрация</h2>
+            <h2 class="modal-title">Вход в систему</h2>
             
             <div class="tabs">
                 <div class="tab active" data-tab="login">Вход</div>
@@ -931,13 +1235,13 @@
                 <form id="login-form">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="login-email" required placeholder="your@email.com">
+                        <input type="email" class="form-input" id="login-email" required placeholder="ваш@email.com">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Пароль</label>
                         <input type="password" class="form-input" id="login-password" required placeholder="••••••••">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary">Войти в аккаунт</button>
                 </form>
             </div>
             
@@ -945,7 +1249,7 @@
                 <form id="register-form">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="register-email" required placeholder="your@email.com">
+                        <input type="email" class="form-input" id="register-email" required placeholder="ваш@email.com">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Пароль</label>
@@ -954,24 +1258,24 @@
                     <div class="form-group">
                         <label class="form-label">Отображаемое имя</label>
                         <input type="text" class="form-input" id="register-display-name" required placeholder="Например: kotkotenok43">
-                        <small style="color: var(--text-secondary); font-size: 12px;">Это имя будут видеть другие пользователи</small>
+                        <div class="form-note">Это имя будут видеть другие пользователи</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Имя пользователя (@никнейм)</label>
-                        <input type="text" class="form-input" id="register-username" required placeholder="Например: @kotkotenok43">
-                        <small style="color: var(--text-secondary); font-size: 12px;">Уникальный идентификатор с символом @</small>
+                        <input type="text" class="form-input" id="register-username" required placeholder="@kotkotenok43">
+                        <div class="form-note">Уникальный идентификатор. Начинается с @</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary">Создать аккаунт</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ЗАГРУЗКИ ТРЕКА -->
+    <!-- Upload Modal -->
     <div class="modal-overlay" id="upload-modal">
-        <div class="modal-content">
+        <div class="modal-content glass-card">
             <button class="close-modal" id="close-upload-modal">&times;</button>
-            <h2 class="modal-title">Загрузить трек</h2>
+            <h2 class="modal-title">Загрузить новый трек</h2>
             
             <form id="upload-track-form">
                 <div class="form-group">
@@ -993,41 +1297,41 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Ссылка на аудиофайл (MP3)</label>
+                    <label class="form-label">Ссылка на MP3 файл</label>
                     <input type="url" class="form-input" id="track-url-input" required placeholder="https://ваш-сайт.com/трек.mp3">
-                    <small style="color: var(--text-secondary); font-size: 12px;">
-                        Внимание: для работы плеера нужна прямая ссылка на MP3-файл
-                    </small>
+                    <div class="form-note">Прямая ссылка на MP3 файл для воспроизведения</div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Обложка трека (URL)</label>
-                    <input type="url" class="form-input" id="track-cover-input" placeholder="https://ваш-сайт.com/обложка.jpg (необязательно)">
+                    <label class="form-label">Обложка (URL, необязательно)</label>
+                    <input type="url" class="form-input" id="track-cover-input" placeholder="https://ваш-сайт.com/обложка.jpg">
                 </div>
                 
-                <div style="background: rgba(0, 201, 255, 0.1); padding: 15px; border-radius: 10px; margin: 20px 0;">
-                    <p style="color: var(--secondary); font-size: 14px; margin: 0;">
-                        <i class="fas fa-info-circle"></i> После загрузки трек будет отправлен на модерацию. 
-                        Только после одобрения администратором он появится в общем плейлисте.
+                <div style="background: rgba(0, 201, 255, 0.1); padding: 15px; border-radius: 12px; margin: 25px 0;">
+                    <p style="margin: 0; font-size: 14px; color: var(--accent-light);">
+                        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                        Трек будет отправлен на модерацию. После одобрения администратором он появится в общем плейлисте.
                     </p>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Отправить на модерацию</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Отправить на модерацию
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- АУДИО ЭЛЕМЕНТ -->
+    <!-- Audio Element -->
     <audio id="audio-player" preload="metadata"></audio>
 
-    <!-- ОСНОВНОЙ СКРИПТ -->
+    <!-- JavaScript -->
     <script>
-        // ===================== КОНФИГУРАЦИЯ =====================
+        // ===================== КОНФИГУРАЦИЯ И ДАННЫЕ =====================
         
         // Суперадмин (ваш аккаунт по умолчанию)
         const SUPER_ADMIN_USERNAME = "@kotkotenok43";
         
-        // Начальные данные
+        // Начальные данные (в реальном приложении хранятся в базе данных)
         let users = JSON.parse(localStorage.getItem('kotoMusicUsers')) || [
             {
                 id: 1,
@@ -1093,16 +1397,19 @@
         const currentTimeEl = document.getElementById('current-time');
         const durationEl = document.getElementById('duration');
         const volumeSlider = document.getElementById('volume-slider');
-        const volumePercent = document.getElementById('volume-percent');
+        const volumeLevel = document.getElementById('volume-level');
         const volumeIcon = document.getElementById('volume-icon');
         const playlistEl = document.getElementById('playlist');
         const authModal = document.getElementById('auth-modal');
         const uploadModal = document.getElementById('upload-modal');
         
-        // ===================== ИНИЦИАЛИЗАЦИЯ =====================
+        // ===================== ОСНОВНЫЕ ФУНКЦИИ =====================
+        
+        // Инициализация приложения
         function initApp() {
             loadFromLocalStorage();
             
+            // Автовход, если есть сохранённая сессия
             const savedUserId = localStorage.getItem('currentUserId');
             if (savedUserId) {
                 const user = users.find(u => u.id.toString() === savedUserId);
@@ -1119,11 +1426,16 @@
             
             setupEventListeners();
             
+            // Настройки аудио по умолчанию
             audioPlayer.volume = 0.7;
-            volumePercent.style.width = '70%';
+            volumeLevel.style.width = '70%';
+            
+            console.log("KotoMusic Glass Edition инициализирован");
         }
         
         // ===================== СИСТЕМА ПОЛЬЗОВАТЕЛЕЙ =====================
+        
+        // Регистрация нового пользователя
         function registerUser(email, password, displayName, username) {
             if (users.some(u => u.email === email)) {
                 return { success: false, message: "Пользователь с таким email уже существует" };
@@ -1158,6 +1470,7 @@
             };
         }
         
+        // Вход пользователя
         function loginUser(user) {
             currentUser = user;
             localStorage.setItem('currentUserId', user.id.toString());
@@ -1168,6 +1481,7 @@
             return true;
         }
         
+        // Выход пользователя
         function logoutUser() {
             currentUser = null;
             localStorage.removeItem('currentUserId');
@@ -1176,6 +1490,8 @@
         }
         
         // ===================== СИСТЕМА МОДЕРАЦИИ =====================
+        
+        // Одобрение пользователя
         function approveUser(userId) {
             const user = users.find(u => u.id === userId);
             if (!user) return false;
@@ -1191,6 +1507,7 @@
             return true;
         }
         
+        // Изменение прав администратора
         function toggleAdminStatus(userId) {
             if (!currentUser || !currentUser.isSuperAdmin) {
                 showNotification("Только суперадмин может управлять администраторами", 'error');
@@ -1211,6 +1528,7 @@
             return true;
         }
         
+        // Одобрение трека
         function approveTrack(trackId) {
             const track = tracks.find(t => t.id === trackId);
             if (!track) return false;
@@ -1222,6 +1540,7 @@
             return true;
         }
         
+        // Отклонение трека
         function rejectTrack(trackId) {
             const track = tracks.find(t => t.id === trackId);
             if (!track) return false;
@@ -1239,6 +1558,8 @@
         }
         
         // ===================== СИСТЕМА ТРЕКОВ =====================
+        
+        // Загрузка нового трека
         function uploadTrack(title, artist, url, coverUrl) {
             if (!currentUser || !currentUser.isApproved) {
                 showNotification("Только одобренные пользователи могут загружать треки", 'error');
@@ -1275,6 +1596,7 @@
             return true;
         }
         
+        // Загрузка трека в плеер
         function loadTrack(index) {
             if (tracks.length === 0) return;
             
@@ -1287,16 +1609,19 @@
             currentTrackIndex = index;
             const track = approvedTracks[index];
             
+            // Обновление интерфейса
             document.getElementById('current-track-title').textContent = track.title;
             document.getElementById('current-track-artist').textContent = track.artist;
             document.getElementById('uploader-name').textContent = track.uploaderDisplayName;
             document.getElementById('uploader-username').textContent = track.uploaderUsername;
             document.getElementById('artist-name').textContent = track.artist;
             
-            const albumArt = document.getElementById('album-art-large');
-            albumArt.style.background = track.coverColor || getRandomColor();
+            // Обновление обложки
+            const albumArt = document.getElementById('album-art-glass');
+            albumArt.style.background = `linear-gradient(135deg, ${track.coverColor || getRandomColor()}, ${getRandomColor()})`;
             albumArt.innerHTML = `<i class="${track.coverIcon || 'fas fa-music'}"></i>`;
             
+            // Загрузка аудио
             if (track.url) {
                 audioPlayer.src = track.url;
                 audioPlayer.load();
@@ -1320,6 +1645,7 @@
             updateActivePlaylistItem();
         }
         
+        // Воспроизведение трека
         function playTrack() {
             if (tracks.length === 0) return;
             
@@ -1329,8 +1655,7 @@
                         isPlaying = true;
                         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                         playPauseBtn.title = "Пауза";
-                        document.getElementById('player-status').innerHTML = 
-                            '<i class="fas fa-circle" style="color: var(--success); font-size: 10px;"></i> Играет';
+                        document.getElementById('player-status-text').textContent = "Играет";
                     })
                     .catch(error => {
                         console.error("Ошибка воспроизведения:", error);
@@ -1339,15 +1664,16 @@
             }
         }
         
+        // Пауза трека
         function pauseTrack() {
             isPlaying = false;
             audioPlayer.pause();
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             playPauseBtn.title = "Воспроизвести";
-            document.getElementById('player-status').innerHTML = 
-                '<i class="fas fa-circle" style="color: var(--secondary); font-size: 10px;"></i> На паузе';
+            document.getElementById('player-status-text').textContent = "На паузе";
         }
         
+        // Следующий трек
         function nextTrack() {
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
@@ -1367,6 +1693,7 @@
             }
         }
         
+        // Предыдущий трек
         function prevTrack() {
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
@@ -1392,8 +1719,9 @@
         }
         
         // ===================== ИНТЕРФЕЙС =====================
+        
+        // Обновление интерфейса
         function updateUI() {
-            const userDisplay = document.getElementById('user-display');
             const userAvatar = document.getElementById('user-avatar');
             const userDisplayName = document.getElementById('user-display-name');
             const userUsername = document.getElementById('user-username');
@@ -1403,13 +1731,13 @@
             const superAdminSection = document.getElementById('super-admin-section');
             
             if (currentUser) {
-                userDisplay.classList.remove('hidden');
                 userAvatar.textContent = currentUser.displayName.charAt(0).toUpperCase();
-                userAvatar.style.background = currentUser.avatarColor || getRandomColor();
+                userAvatar.style.background = `linear-gradient(135deg, ${currentUser.avatarColor}, ${getRandomColor()})`;
                 userDisplayName.textContent = currentUser.displayName;
                 userUsername.textContent = currentUser.username;
                 
-                authToggleBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Выйти';
+                authToggleBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
+                authToggleBtn.title = "Выйти";
                 authToggleBtn.onclick = logoutUser;
                 
                 if (currentUser.isAdmin || currentUser.isSuperAdmin) {
@@ -1431,8 +1759,13 @@
                     uploadSection.classList.add('hidden');
                 }
             } else {
-                userDisplay.classList.add('hidden');
-                authToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
+                userAvatar.textContent = "G";
+                userAvatar.style.background = "linear-gradient(135deg, #666, #888)";
+                userDisplayName.textContent = "Гость";
+                userUsername.textContent = "@guest";
+                
+                authToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
+                authToggleBtn.title = "Войти";
                 authToggleBtn.onclick = () => authModal.style.display = 'flex';
                 
                 adminPanel.classList.remove('visible');
@@ -1440,6 +1773,7 @@
             }
         }
         
+        // Отрисовка плейлиста
         function renderPlaylist() {
             playlistEl.innerHTML = '';
             
@@ -1449,30 +1783,32 @@
                 playlistEl.innerHTML = `
                     <div class="text-center" style="padding: 40px 20px; color: var(--text-secondary);">
                         <i class="fas fa-music" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                        <p>Плейлист пуст</p>
+                        <p style="font-size: 16px; margin-bottom: 10px;">Плейлист пуст</p>
                         ${currentUser && currentUser.isApproved ? 
-                            '<p style="margin-top: 10px; font-size: 14px;">Загрузите первый трек!</p>' : 
-                            '<p style="margin-top: 10px; font-size: 14px;">Ожидайте загрузки треков от пользователей</p>'}
+                            '<p style="font-size: 14px; opacity: 0.7;">Загрузите первый трек!</p>' : 
+                            '<p style="font-size: 14px; opacity: 0.7;">Ожидайте загрузки треков</p>'}
                     </div>
                 `;
                 return;
             }
             
             approvedTracks.forEach((track, index) => {
-                const li = document.createElement('li');
+                const li = document.createElement('div');
                 li.className = 'playlist-item';
                 if (index === currentTrackIndex) {
                     li.classList.add('active');
                 }
                 
                 li.innerHTML = `
-                    <div class="track-cover" style="background: ${track.coverColor}">
+                    <div class="track-number">${(index + 1).toString().padStart(2, '0')}</div>
+                    <div class="track-cover-small" style="background: ${track.coverColor}">
                         <i class="${track.coverIcon}"></i>
                     </div>
-                    <div class="track-info">
-                        <div class="track-title">${track.title}</div>
-                        <div class="track-meta">
-                            <span class="track-artist-badge">${track.artist}</span>
+                    <div class="track-info-small">
+                        <div class="track-title-small">${track.title}</div>
+                        <div class="track-meta-small">
+                            <span>${track.artist}</span>
+                            <span>•</span>
                             <span>${track.uploaderDisplayName}</span>
                         </div>
                     </div>
@@ -1488,24 +1824,25 @@
             });
         }
         
+        // Отрисовка панели администратора
         function renderAdminPanel() {
             const pendingUsers = users.filter(u => !u.isApproved && !u.isSuperAdmin);
             const pendingUsersList = document.getElementById('pending-users-list');
             
             if (pendingUsers.length === 0) {
-                pendingUsersList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary);">Нет пользователей на модерации</div>';
+                pendingUsersList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary); font-size: 14px;">Нет пользователей на модерации</div>';
             } else {
                 pendingUsersList.innerHTML = '';
                 pendingUsers.forEach(user => {
                     const item = document.createElement('div');
                     item.className = 'admin-item';
                     item.innerHTML = `
-                        <div class="user-display">
-                            <div class="user-avatar-small" style="background: ${user.avatarColor}">
+                        <div class="admin-user-info">
+                            <div class="user-avatar-tiny" style="background: ${user.avatarColor}">
                                 ${user.displayName.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                                <div style="font-weight: 600;">${user.displayName}</div>
+                                <div style="font-weight: 600; font-size: 14px;">${user.displayName}</div>
                                 <div style="font-size: 12px; color: var(--text-secondary);">${user.username}</div>
                             </div>
                         </div>
@@ -1523,7 +1860,7 @@
             const pendingTracksList = document.getElementById('pending-tracks-list');
             
             if (pendingTracks.length === 0) {
-                pendingTracksList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary);">Нет треков на модерации</div>';
+                pendingTracksList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary); font-size: 14px;">Нет треков на модерации</div>';
             } else {
                 pendingTracksList.innerHTML = '';
                 pendingTracks.forEach(track => {
@@ -1532,18 +1869,18 @@
                     item.className = 'admin-item';
                     item.innerHTML = `
                         <div style="flex: 1;">
-                            <div style="font-weight: 600; margin-bottom: 5px;">${track.title}</div>
-                            <div style="font-size: 13px; color: var(--text-secondary);">
+                            <div style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">${track.title}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">
                                 Исполнитель: ${track.artist} | 
-                                Загрузил: ${uploader ? uploader.displayName : 'Неизвестно'}
+                                Автор: ${uploader ? uploader.displayName : 'Неизвестно'}
                             </div>
                         </div>
                         <div class="admin-actions">
                             <button class="action-btn approve" data-track-id="${track.id}">
-                                Одобрить
+                                ✓
                             </button>
                             <button class="action-btn deny" data-track-id="${track.id}">
-                                Отклонить
+                                ✗
                             </button>
                         </div>
                     `;
@@ -1561,23 +1898,23 @@
                     item.className = 'admin-item';
                     
                     const statusClass = user.isSuperAdmin ? 'status-admin' : 'status-approved';
-                    const statusText = user.isSuperAdmin ? 'Суперадмин' : 'Администратор';
+                    const statusText = user.isSuperAdmin ? 'Суперадмин' : 'Админ';
                     
                     item.innerHTML = `
-                        <div class="user-display">
-                            <div class="user-avatar-small" style="background: ${user.avatarColor}">
+                        <div class="admin-user-info">
+                            <div class="user-avatar-tiny" style="background: ${user.avatarColor}">
                                 ${user.displayName.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                                <div style="font-weight: 600;">${user.displayName}</div>
+                                <div style="font-weight: 600; font-size: 14px;">${user.displayName}</div>
                                 <div style="font-size: 12px; color: var(--text-secondary);">${user.username}</div>
                             </div>
                         </div>
                         <div>
                             <span class="status-badge ${statusClass}">${statusText}</span>
                             ${!user.isSuperAdmin ? `
-                                <button class="action-btn admin mt-20" data-user-id="${user.id}" style="display: block; margin-top: 5px;">
-                                    ${user.isAdmin ? 'Снять права' : 'Назначить админом'}
+                                <button class="action-btn admin mt-20" data-user-id="${user.id}" style="margin-top: 5px; font-size: 10px; padding: 4px 8px;">
+                                    ${user.isAdmin ? 'Снять' : 'Назначить'}
                                 </button>
                             ` : ''}
                         </div>
@@ -1587,6 +1924,7 @@
             }
         }
         
+        // Обновление активного элемента в плейлисте
         function updateActivePlaylistItem() {
             const items = document.querySelectorAll('.playlist-item');
             items.forEach((item, index) => {
@@ -1599,6 +1937,8 @@
         }
         
         // ===================== УТИЛИТЫ =====================
+        
+        // Форматирование времени
         function formatTime(seconds) {
             if (isNaN(seconds)) return "0:00";
             const min = Math.floor(seconds / 60);
@@ -1606,14 +1946,17 @@
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
         
+        // Генерация случайного цвета
         function getRandomColor() {
             const colors = [
                 '#6c5ce7', '#00c9ff', '#ff6b6b', '#a29bfe', 
-                '#fd79a8', '#00b894', '#fdcb6e', '#636e72'
+                '#fd79a8', '#00b894', '#fdcb6e', '#636e72',
+                '#0984e3', '#00cec9', '#a29bfe', '#fd79a8'
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
         
+        // Показать уведомление
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.style.cssText = `
@@ -1625,12 +1968,14 @@
                            type === 'error' ? 'rgba(255, 107, 107, 0.9)' : 
                            'rgba(108, 92, 231, 0.9)'};
                 color: white;
-                border-radius: 10px;
+                border-radius: 12px;
                 z-index: 10000;
                 font-weight: 600;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
                 animation: slideIn 0.3s ease;
                 max-width: 300px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
             `;
             notification.textContent = message;
             
@@ -1646,11 +1991,13 @@
             }, 3000);
         }
         
+        // Сохранение данных в localStorage
         function saveToLocalStorage() {
             localStorage.setItem('kotoMusicUsers', JSON.stringify(users));
             localStorage.setItem('kotoMusicTracks', JSON.stringify(tracks));
         }
         
+        // Загрузка данных из localStorage
         function loadFromLocalStorage() {
             const savedUsers = localStorage.getItem('kotoMusicUsers');
             const savedTracks = localStorage.getItem('kotoMusicTracks');
@@ -1660,7 +2007,9 @@
         }
         
         // ===================== НАСТРОЙКА СОБЫТИЙ =====================
+        
         function setupEventListeners() {
+            // Аудиоплеер
             audioPlayer.addEventListener('timeupdate', () => {
                 const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
                 progress.style.width = `${percent}%`;
@@ -1669,6 +2018,7 @@
             
             audioPlayer.addEventListener('ended', nextTrack);
             
+            // Управление воспроизведением
             playPauseBtn.addEventListener('click', () => {
                 if (isPlaying) {
                     pauseTrack();
@@ -1680,6 +2030,7 @@
             nextBtn.addEventListener('click', nextTrack);
             prevBtn.addEventListener('click', prevTrack);
             
+            // Прогресс-бар
             progressBar.addEventListener('click', (e) => {
                 const width = progressBar.clientWidth;
                 const clickX = e.offsetX;
@@ -1690,13 +2041,14 @@
                 }
             });
             
+            // Громкость
             volumeSlider.addEventListener('click', (e) => {
                 const width = volumeSlider.clientWidth;
                 const clickX = e.offsetX;
                 const volume = Math.min(Math.max(clickX / width, 0), 1);
                 
                 audioPlayer.volume = volume;
-                volumePercent.style.width = `${volume * 100}%`;
+                volumeLevel.style.width = `${volume * 100}%`;
                 
                 if (volume === 0) {
                     volumeIcon.className = 'fas fa-volume-mute';
@@ -1707,6 +2059,7 @@
                 }
             });
             
+            // Модальные окна
             document.getElementById('auth-toggle-btn').addEventListener('click', () => {
                 if (!currentUser) {
                     authModal.style.display = 'flex';
@@ -1725,6 +2078,7 @@
                 uploadModal.style.display = 'flex';
             });
             
+            // Вкладки
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const tabId = tab.getAttribute('data-tab');
@@ -1739,6 +2093,7 @@
                 });
             });
             
+            // Форма входа
             document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -1756,6 +2111,7 @@
                 }
             });
             
+            // Форма регистрации
             document.getElementById('register-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -1790,6 +2146,7 @@
                 }
             });
             
+            // Форма загрузки трека
             document.getElementById('upload-track-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
@@ -1807,6 +2164,7 @@
                 }
             });
             
+            // Выбор исполнителя
             document.getElementById('artist-select').addEventListener('change', (e) => {
                 const customInput = document.getElementById('custom-artist');
                 if (e.target.value === 'Custom') {
@@ -1816,7 +2174,9 @@
                 }
             });
             
+            // Делегирование событий для панели администратора
             document.addEventListener('click', (e) => {
+                // Одобрение пользователя
                 if (e.target.classList.contains('approve') && e.target.hasAttribute('data-user-id')) {
                     const userId = parseInt(e.target.getAttribute('data-user-id'));
                     if (approveUser(userId)) {
@@ -1826,6 +2186,7 @@
                     }
                 }
                 
+                // Управление администраторами
                 if (e.target.classList.contains('admin') && e.target.hasAttribute('data-user-id')) {
                     const userId = parseInt(e.target.getAttribute('data-user-id'));
                     if (toggleAdminStatus(userId)) {
@@ -1834,6 +2195,7 @@
                     }
                 }
                 
+                // Модерация треков
                 if (e.target.classList.contains('approve') && e.target.hasAttribute('data-track-id')) {
                     const trackId = parseInt(e.target.getAttribute('data-track-id'));
                     if (approveTrack(trackId)) {
@@ -1851,6 +2213,7 @@
                 }
             });
             
+            // Горячие клавиши
             document.addEventListener('keydown', (e) => {
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
                 
@@ -1886,8 +2249,10 @@
         }
         
         // ===================== ЗАПУСК ПРИЛОЖЕНИЯ =====================
+        
         document.addEventListener('DOMContentLoaded', initApp);
         
+        // Добавление CSS анимаций
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
@@ -1897,16 +2262,6 @@
             @keyframes slideOut {
                 from { transform: translateX(0); opacity: 1; }
                 to { transform: translateX(100%); opacity: 0; }
-            }
-            .viz-bar {
-                animation: equalizer 1.5s ease infinite alternate;
-            }
-            @keyframes equalizer {
-                0% { height: 10%; }
-                100% { height: 90%; }
-            }
-            .viz-bar:nth-child(odd) {
-                animation-delay: 0.5s;
             }
         `;
         document.head.appendChild(style);
