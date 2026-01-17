@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotoMusic Glass — Музыкальная платформа</title>
+    <title>KotoMusic Beta - Публичный музыкальный плеер</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass-bg: rgba(20, 20, 35, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --primary-glow: rgba(108, 92, 231, 0.4);
-            --secondary-glow: rgba(0, 201, 255, 0.3);
-            --accent: #6c5ce7;
-            --accent-light: #8a7cff;
-            --accent-dark: #5649c4;
-            --text: #ffffff;
-            --text-secondary: #b0b0d0;
-            --success: #00b894;
+            --primary: #6c5ce7;
+            --primary-dark: #5649c4;
+            --primary-light: #8a7cff;
+            --secondary: #00c9ff;
             --danger: #ff6b6b;
+            --success: #00b894;
             --warning: #fdcb6e;
-            --bg-gradient: linear-gradient(135deg, #0a0a15 0%, #1a1a2e 100%);
+            --dark-bg: #0f0f1a;
+            --darker-bg: #0a0a12;
+            --card-bg: rgba(25, 25, 40, 0.9);
+            --text: #ffffff;
+            --text-secondary: #aaaacc;
+            --border: rgba(100, 100, 255, 0.15);
         }
 
         * {
@@ -32,47 +31,16 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
             color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, var(--primary-glow) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, var(--secondary-glow) 0%, transparent 40%);
-            z-index: -1;
-            opacity: 0.5;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        /* Glass Card Base */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
         /* Header */
@@ -82,6 +50,7 @@
             align-items: center;
             padding: 20px 0;
             margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
@@ -91,60 +60,58 @@
         }
 
         .logo-icon {
+            font-size: 32px;
+            color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 20px var(--primary-glow);
         }
 
         .logo-text {
             font-size: 28px;
             font-weight: 800;
-            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
 
-        .logo-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .beta-badge {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-left: 10px;
         }
 
-        /* User Profile */
-        .user-profile {
+        .user-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .user-avatar {
-            width: 48px;
-            height: 48px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .user-avatar:hover {
             transform: scale(1.05);
-            border-color: var(--accent);
         }
 
         .user-info {
@@ -160,64 +127,65 @@
         .user-username {
             font-size: 13px;
             color: var(--text-secondary);
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
+        }
+
+        .auth-btn {
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            color: var(--primary-light);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            background: rgba(108, 92, 231, 0.25);
+            transform: translateY(-2px);
         }
 
         /* Main Layout */
         .main-layout {
             display: grid;
-            grid-template-columns: 350px 1fr 350px;
+            grid-template-columns: 300px 1fr;
             gap: 25px;
-            margin-bottom: 30px;
+            min-height: 70vh;
         }
 
-        @media (max-width: 1400px) {
-            .main-layout {
-                grid-template-columns: 300px 1fr;
-            }
-            .right-sidebar {
-                grid-column: 1 / -1;
-                margin-top: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
         }
 
         /* Sidebar */
-        .sidebar-section {
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: 16px;
             padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .sidebar-section:last-child {
-            margin-bottom: 0;
+            border: 1px solid var(--border);
         }
 
         .section-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: var(--accent-light);
+            color: var(--primary-light);
             display: flex;
             align-items: center;
             gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-title i {
-            font-size: 18px;
         }
 
         /* Playlist */
         .playlist {
             max-height: 500px;
             overflow-y: auto;
-            padding-right: 10px;
+            margin-bottom: 25px;
         }
 
         .playlist::-webkit-scrollbar {
@@ -230,18 +198,19 @@
         }
 
         .playlist::-webkit-scrollbar-thumb {
-            background: var(--accent);
+            background: var(--primary);
             border-radius: 10px;
         }
 
         .playlist-item {
-            display: flex;
-            align-items: center;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             background: rgba(255, 255, 255, 0.03);
         }
 
@@ -252,61 +221,65 @@
 
         .playlist-item.active {
             background: rgba(108, 92, 231, 0.15);
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--primary);
         }
 
-        .track-number {
-            width: 30px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .track-cover-small {
-            width: 45px;
-            height: 45px;
+        .track-cover {
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            font-size: 18px;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        .track-info-small {
+        .track-info {
             flex: 1;
             min-width: 0;
         }
 
-        .track-title-small {
+        .track-name {
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .track-meta-small {
-            font-size: 12px;
+        .track-meta {
+            font-size: 13px;
             color: var(--text-secondary);
             display: flex;
             gap: 10px;
+            align-items: center;
+        }
+
+        .track-artist {
+            background: rgba(0, 201, 255, 0.1);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
         }
 
         .track-duration {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
-            font-weight: 500;
+            flex-shrink: 0;
         }
 
-        /* Player */
+        /* Player Section */
         .player-section {
+            background: var(--card-bg);
+            border-radius: 16px;
             padding: 30px;
+            border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         .now-playing-header {
@@ -317,8 +290,8 @@
         }
 
         .now-playing-badge {
-            background: rgba(108, 92, 231, 0.2);
-            color: var(--accent-light);
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--primary-light);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 12px;
@@ -337,11 +310,11 @@
             gap: 8px;
         }
 
-        .player-status-dot {
+        .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--accent);
+            background: var(--primary);
             animation: pulse 2s infinite;
         }
 
@@ -352,65 +325,41 @@
 
         /* Album Art */
         .album-art-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
+            text-align: center;
             margin: 0 auto 40px;
+            max-width: 400px;
         }
 
-        .album-art-glass {
+        .album-art {
             width: 100%;
-            height: 100%;
-            border-radius: 20px;
+            max-width: 300px;
+            height: 300px;
+            border-radius: 16px;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 80px;
-            position: relative;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
-        .album-art-glass::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
-            border-radius: 20px;
-        }
-
-        /* Track Info */
         .track-info-large {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
-        .track-title-large {
+        .track-title {
             font-size: 36px;
             font-weight: 800;
             margin-bottom: 10px;
             line-height: 1.2;
-            background: linear-gradient(90deg, #fff, var(--accent-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
 
-        @media (max-width: 768px) {
-            .track-title-large {
-                font-size: 28px;
-            }
-        }
-
-        .track-artist {
+        .track-artist-large {
             font-size: 22px;
-            color: var(--accent-light);
+            color: var(--primary-light);
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -418,25 +367,51 @@
         .track-uploader {
             font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .artist-chip {
+        .artist-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(0, 201, 255, 0.15);
-            color: var(--text);
+            color: var(--secondary);
             padding: 10px 20px;
             border-radius: 50px;
             font-weight: 600;
             font-size: 16px;
             border: 1px solid rgba(0, 201, 255, 0.3);
-            backdrop-filter: blur(10px);
+        }
+
+        /* Visualizer */
+        .visualizer {
+            height: 80px;
+            margin: 30px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 5px;
+            padding: 0 20px;
+        }
+
+        .viz-bar {
+            width: 10px;
+            background: linear-gradient(to top, var(--primary), var(--primary-light));
+            border-radius: 4px 4px 0 0;
+            animation: equalizer 1.5s ease infinite alternate;
+        }
+
+        .viz-bar:nth-child(odd) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes equalizer {
+            0% { height: 20%; }
+            100% { height: 100%; }
         }
 
         /* Progress Bar */
-        .progress-container {
+        .progress-area {
             margin-bottom: 25px;
         }
 
@@ -448,29 +423,12 @@
             margin-bottom: 10px;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
         }
 
         .progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
             border-radius: 10px;
             position: relative;
             transition: width 0.1s linear;
@@ -486,7 +444,7 @@
             height: 16px;
             border-radius: 50%;
             background: white;
-            box-shadow: 0 0 15px var(--accent);
+            box-shadow: 0 0 15px var(--primary);
             opacity: 0;
             transition: opacity 0.2s;
         }
@@ -495,7 +453,7 @@
             opacity: 1;
         }
 
-        .time-display {
+        .timer {
             display: flex;
             justify-content: space-between;
             font-size: 14px;
@@ -505,9 +463,6 @@
 
         /* Controls */
         .player-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
             margin-top: auto;
         }
 
@@ -516,6 +471,7 @@
             justify-content: center;
             align-items: center;
             gap: 25px;
+            margin-bottom: 20px;
         }
 
         .control-btn {
@@ -523,7 +479,7 @@
             height: 50px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: none;
             color: var(--text);
             font-size: 20px;
             cursor: pointer;
@@ -531,228 +487,92 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            backdrop-filter: blur(10px);
         }
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
-            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .play-pause-btn {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             font-size: 28px;
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
-            border: none;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
         }
 
         .play-pause-btn:hover {
             transform: scale(1.15);
-            box-shadow: 0 12px 35px rgba(108, 92, 231, 0.6);
         }
 
-        .controls-secondary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .volume-container {
+        .volume-area {
             display: flex;
             align-items: center;
             gap: 15px;
-            flex: 1;
+            margin-top: 20px;
         }
 
         .volume-slider {
             flex: 1;
-            height: 5px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             cursor: pointer;
-            position: relative;
         }
 
         .volume-level {
-            height: 100%;
             width: 70%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
             border-radius: 10px;
         }
 
-        /* Right Sidebar */
-        .right-sidebar {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Admin Panel */
+        /* Admin Panel (hidden by default) */
         .admin-panel {
             display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(10, 10, 30, 0.8);
+            border-radius: 12px;
+            border: 1px solid var(--primary);
         }
 
         .admin-panel.visible {
             display: block;
         }
 
-        .admin-section {
-            margin-bottom: 25px;
-        }
-
-        .admin-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .admin-list {
-            max-height: 200px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .admin-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .admin-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .admin-user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar-tiny {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: transparent;
-        }
-
-        .action-btn.approve {
-            color: var(--success);
-            border-color: rgba(0, 184, 148, 0.3);
-        }
-
-        .action-btn.approve:hover {
-            background: rgba(0, 184, 148, 0.1);
-        }
-
-        .action-btn.deny {
-            color: var(--danger);
-            border-color: rgba(255, 107, 107, 0.3);
-        }
-
-        .action-btn.deny:hover {
-            background: rgba(255, 107, 107, 0.1);
-        }
-
-        .action-btn.admin {
-            color: var(--accent);
-            border-color: rgba(108, 92, 231, 0.3);
-        }
-
-        .action-btn.admin:hover {
-            background: rgba(108, 92, 231, 0.1);
-        }
-
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-pending {
-            background: rgba(253, 203, 110, 0.15);
-            color: var(--warning);
-        }
-
-        .status-approved {
-            background: rgba(0, 184, 148, 0.15);
-            color: var(--success);
-        }
-
-        .status-admin {
-            background: rgba(108, 92, 231, 0.15);
-            color: var(--accent-light);
-        }
-
         /* Upload Section */
         .upload-section {
             text-align: center;
-            padding: 25px;
-        }
-
-        .upload-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: rgba(108, 92, 231, 0.15);
-            border: 2px dashed var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-            color: var(--accent);
+            padding: 20px;
+            background: rgba(108, 92, 231, 0.05);
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 2px dashed var(--border);
         }
 
         .upload-btn {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 20px auto 0;
+            margin: 15px auto 0;
             transition: all 0.3s;
         }
 
         .upload-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
         }
 
-        /* Modal Windows */
+        /* Modals */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -760,8 +580,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -769,23 +588,13 @@
         }
 
         .modal-content {
-            width: 100%;
-            max-width: 450px;
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid var(--border);
             position: relative;
-            animation: modalAppear 0.3s ease;
-        }
-
-        @keyframes modalAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
         }
 
         .close-modal {
@@ -797,26 +606,13 @@
             color: var(--text-secondary);
             font-size: 24px;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
         }
 
         .modal-title {
             font-size: 24px;
-            font-weight: 700;
             margin-bottom: 25px;
+            color: var(--primary-light);
             text-align: center;
-            color: var(--accent-light);
         }
 
         /* Forms */
@@ -827,51 +623,40 @@
         .form-label {
             display: block;
             margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 600;
             color: var(--text-secondary);
+            font-size: 14px;
         }
 
         .form-input {
             width: 100%;
-            padding: 14px 18px;
+            padding: 14px;
             background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
             color: var(--text);
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: var(--primary);
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
         }
 
-        .form-note {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-        }
-
-        /* Buttons */
         .btn {
             padding: 14px 24px;
-            border-radius: 12px;
+            border-radius: 10px;
             border: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
             transition: all 0.3s;
             width: 100%;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
         }
 
@@ -880,45 +665,14 @@
             box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tab {
-            flex: 1;
+        /* Footer */
+        .footer {
             text-align: center;
-            padding: 12px;
-            cursor: pointer;
-            font-weight: 600;
+            padding: 20px;
             color: var(--text-secondary);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            color: var(--accent-light);
-            border-bottom-color: var(--accent);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
+            font-size: 14px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
         }
 
         /* Utility */
@@ -938,47 +692,6 @@
             margin-top: 20px;
         }
 
-        .mb-20 {
-            margin-bottom: 20px;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 30px;
-        }
-
-        /* Visualizer */
-        .visualizer {
-            height: 80px;
-            margin: 30px 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 4px;
-            padding: 0 20px;
-        }
-
-        .viz-bar {
-            width: 10px;
-            background: linear-gradient(to top, var(--accent), var(--accent-light));
-            border-radius: 4px 4px 0 0;
-            animation: equalizer 1.5s ease infinite alternate;
-        }
-
-        .viz-bar:nth-child(odd) {
-            animation-delay: 0.3s;
-        }
-
-        @keyframes equalizer {
-            0% { height: 20%; }
-            100% { height: 100%; }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .header {
@@ -987,21 +700,22 @@
                 text-align: center;
             }
             
-            .user-profile {
+            .user-section {
                 justify-content: center;
             }
             
-            .album-art-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .track-title-large {
+            .track-title {
                 font-size: 28px;
             }
             
-            .track-artist {
+            .track-artist-large {
                 font-size: 18px;
+            }
+            
+            .album-art {
+                width: 250px;
+                height: 250px;
+                font-size: 60px;
             }
             
             .controls-main {
@@ -1027,99 +741,109 @@
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <div class="logo-icon glass-card">
-                    <i class="fas fa-wave-square"></i>
+                <div class="logo-icon">
+                    <i class="fas fa-music"></i>
                 </div>
                 <div>
-                    <div class="logo-text">KotoMusic</div>
-                    <div class="logo-subtitle">Glass Edition</div>
+                    <div class="logo-text">KotoMusic<span class="beta-badge">BETA</span></div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 5px;">
+                        Публичный музыкальный плеер
+                    </div>
                 </div>
             </div>
             
-            <div class="user-profile">
-                <div class="user-avatar glass-card" id="user-avatar">K</div>
+            <div class="user-section">
+                <div class="user-avatar" id="user-avatar">K</div>
                 <div class="user-info">
                     <div class="user-display-name" id="user-display-name">Гость</div>
                     <div class="user-username" id="user-username">@guest</div>
                 </div>
-                <button class="control-btn" id="auth-toggle-btn" title="Войти">
-                    <i class="fas fa-sign-in-alt"></i>
+                <button class="auth-btn" id="auth-toggle-btn">
+                    <i class="fas fa-sign-in-alt"></i> Войти
                 </button>
             </div>
         </header>
 
-        <!-- Main Layout -->
+        <!-- Main Content -->
         <div class="main-layout">
-            <!-- Left Sidebar -->
-            <aside class="left-sidebar">
-                <div class="sidebar-section glass-card">
-                    <h3 class="section-title"><i class="fas fa-list-music"></i> Плейлист</h3>
-                    <div class="playlist" id="playlist">
-                        <!-- Playlist items will be inserted here by JavaScript -->
-                    </div>
+            <!-- Sidebar with Playlist -->
+            <aside class="sidebar">
+                <h3 class="section-title">
+                    <i class="fas fa-list-music"></i> Публичный плейлист
+                    <span id="track-count" style="font-size: 14px; color: var(--text-secondary); margin-left: auto;">
+                        (<span id="count-number">0</span> треков)
+                    </span>
+                </h3>
+                
+                <div class="playlist" id="playlist">
+                    <!-- Playlist will be populated by JavaScript -->
                 </div>
                 
                 <!-- Admin Panel (visible only to admins) -->
                 <div id="admin-panel-sidebar" class="admin-panel">
-                    <div class="sidebar-section glass-card">
-                        <h3 class="section-title"><i class="fas fa-user-shield"></i> Модерация</h3>
-                        
-                        <div class="admin-section">
-                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">Ожидают одобрения</h4>
-                            <div class="admin-list" id="pending-users-list">
-                                <!-- Pending users list -->
-                            </div>
-                        </div>
-                        
-                        <div class="admin-section">
-                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">Треки на проверке</h4>
-                            <div class="admin-list" id="pending-tracks-list">
-                                <!-- Pending tracks list -->
-                            </div>
-                        </div>
-                        
-                        <!-- Super Admin Section (only for @kotkotenok43) -->
-                        <div class="admin-section" id="super-admin-section">
-                            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--accent-light);">
-                                <i class="fas fa-crown"></i> Управление администраторами
-                            </h4>
-                            <div class="admin-list" id="admins-list">
-                                <!-- Admins list -->
-                            </div>
+                    <h3 class="section-title"><i class="fas fa-user-shield"></i> Панель администратора</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">
+                            Ожидают одобрения
+                        </h4>
+                        <div id="pending-users-list" style="font-size: 14px; color: var(--text-secondary);">
+                            <!-- Pending users will be shown here -->
                         </div>
                     </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--text-secondary);">
+                            Треки на модерации
+                        </h4>
+                        <div id="pending-tracks-list" style="font-size: 14px; color: var(--text-secondary);">
+                            <!-- Pending tracks will be shown here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Section (visible only to approved users) -->
+                <div id="upload-section-sidebar" class="upload-section hidden">
+                    <h3 class="section-title" style="font-size: 16px; margin-bottom: 10px;">
+                        <i class="fas fa-cloud-upload-alt"></i> Ваш аккаунт
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
+                        Загрузите свою музыку в публичный плейлист
+                    </p>
+                    <button class="upload-btn" id="open-upload-modal-btn">
+                        <i class="fas fa-plus"></i> Загрузить трек
+                    </button>
                 </div>
             </aside>
 
             <!-- Main Player -->
-            <main class="player-section glass-card">
+            <main class="player-section">
                 <div class="now-playing-header">
                     <div class="now-playing-badge">
                         <i class="fas fa-play-circle"></i> СЕЙЧАС ИГРАЕТ
                     </div>
                     <div class="player-status">
-                        <div class="player-status-dot"></div>
+                        <div class="status-dot"></div>
                         <span id="player-status-text">Остановлено</span>
                     </div>
                 </div>
                 
                 <!-- Album Art -->
                 <div class="album-art-container">
-                    <div class="album-art-glass" id="album-art-glass">
+                    <div class="album-art" id="album-art">
                         <i class="fas fa-music"></i>
                     </div>
-                </div>
-                
-                <!-- Track Info -->
-                <div class="track-info-large">
-                    <h1 class="track-title-large" id="current-track-title">Замкнутый Круг</h1>
-                    <div class="track-artist" id="current-track-artist">FUZZ-2.0</div>
-                    <div class="track-uploader" id="current-track-uploader">
-                        Загрузил: <span id="uploader-name">kotkotenok43</span> 
-                        (<span id="uploader-username">@kotkotenok43</span>)
-                    </div>
-                    <div class="artist-chip">
-                        <i class="fas fa-user"></i> Исполнитель: <span id="artist-name">FUZZ-2.0</span>
+                    
+                    <div class="track-info-large">
+                        <h1 class="track-title" id="current-track-title">Замкнутый Круг</h1>
+                        <div class="track-artist-large" id="current-track-artist">FUZZ-2.0</div>
+                        <div class="track-uploader" id="current-track-uploader">
+                            Загрузил: <span id="uploader-name">kotkotenok43</span> 
+                            (<span id="uploader-username">@kotkotenok43</span>)
+                        </div>
+                        <div class="artist-badge">
+                            <i class="fas fa-user"></i> Исполнитель: <span id="artist-name">FUZZ-2.0</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1136,11 +860,11 @@
                 </div>
                 
                 <!-- Progress Bar -->
-                <div class="progress-container">
+                <div class="progress-area">
                     <div class="progress-bar" id="progress-bar">
                         <div class="progress" id="progress"></div>
                     </div>
-                    <div class="time-display">
+                    <div class="timer">
                         <span id="current-time">0:00</span>
                         <span id="duration">0:00</span>
                     </div>
@@ -1152,13 +876,13 @@
                         <button class="control-btn" id="shuffle-btn" title="Перемешать">
                             <i class="fas fa-random"></i>
                         </button>
-                        <button class="control-btn" id="prev-btn" title="Предыдущий">
+                        <button class="control-btn" id="prev-btn" title="Предыдущий трек">
                             <i class="fas fa-step-backward"></i>
                         </button>
                         <button class="control-btn play-pause-btn" id="play-pause-btn" title="Воспроизвести">
                             <i class="fas fa-play"></i>
                         </button>
-                        <button class="control-btn" id="next-btn" title="Следующий">
+                        <button class="control-btn" id="next-btn" title="Следующий трек">
                             <i class="fas fa-step-forward"></i>
                         </button>
                         <button class="control-btn" id="repeat-btn" title="Повтор">
@@ -1166,116 +890,90 @@
                         </button>
                     </div>
                     
-                    <div class="controls-secondary">
-                        <div class="volume-container">
-                            <i class="fas fa-volume-up" id="volume-icon" style="color: var(--accent);"></i>
-                            <div class="volume-slider" id="volume-slider">
-                                <div class="volume-level" id="volume-level"></div>
-                            </div>
+                    <div class="volume-area">
+                        <i class="fas fa-volume-up" id="volume-icon" style="color: var(--primary);"></i>
+                        <div class="volume-slider" id="volume-slider">
+                            <div class="volume-level" id="volume-level"></div>
                         </div>
                     </div>
                 </div>
             </main>
-
-            <!-- Right Sidebar -->
-            <aside class="right-sidebar">
-                <!-- Upload Section (visible only to approved users) -->
-                <div id="upload-section-sidebar" class="sidebar-section glass-card hidden">
-                    <div class="upload-section">
-                        <div class="upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <h3 style="font-size: 18px; margin-bottom: 10px; font-weight: 700;">Загрузить трек</h3>
-                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
-                            Поделитесь своей музыкой с сообществом. После проверки модератором трек появится в плейлисте.
-                        </p>
-                        <button class="upload-btn" id="open-upload-modal-btn">
-                            <i class="fas fa-plus"></i> Новый трек
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Currently Playing Info -->
-                <div class="sidebar-section glass-card">
-                    <h3 class="section-title"><i class="fas fa-info-circle"></i> О треке</h3>
-                    <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
-                        <p style="margin-bottom: 15px;">Текущий трек загружен через систему модерации KotoMusic.</p>
-                        <div style="background: rgba(108, 92, 231, 0.1); padding: 15px; border-radius: 12px;">
-                            <p style="margin: 0; font-size: 13px;">
-                                <i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 8px;"></i>
-                                Все треки проходят проверку перед публикацией.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </aside>
         </div>
 
         <!-- Footer -->
         <footer class="footer">
-            <p>KotoMusic Glass Edition | Музыкальная платформа с системой модерации</p>
-            <p style="margin-top: 5px; font-size: 12px; opacity: 0.7;">
-                Интерфейс в стиле Glassmorphism | Все права защищены
+            <p>KotoMusic Beta v3.0 | Публичный музыкальный плеер</p>
+            <p style="margin-top: 5px; font-size: 12px; color: var(--text-secondary);">
+                Треки загружаются пользователями после модерации
             </p>
         </footer>
     </div>
 
     <!-- Auth Modal -->
     <div class="modal-overlay" id="auth-modal">
-        <div class="modal-content glass-card">
+        <div class="modal-content">
             <button class="close-modal" id="close-auth-modal">&times;</button>
-            <h2 class="modal-title">Вход в систему</h2>
+            <h2 class="modal-title">Вход в KotoMusic</h2>
             
-            <div class="tabs">
-                <div class="tab active" data-tab="login">Вход</div>
-                <div class="tab" data-tab="register">Регистрация</div>
+            <form id="login-form" style="display: block;">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="login-email" required placeholder="ваш@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary">Войти в аккаунт</button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="button" id="show-register-btn" style="background: none; border: none; color: var(--primary-light); cursor: pointer;">
+                    Нет аккаунта? Зарегистрироваться
+                </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="register-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-register-modal">&times;</button>
+            <h2 class="modal-title">Регистрация</h2>
             
-            <div class="tab-content active" id="login-tab">
-                <form id="login-form">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="login-email" required placeholder="ваш@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" id="login-password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Войти в аккаунт</button>
-                </form>
-            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="register-email" required placeholder="ваш@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" id="register-password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Отображаемое имя</label>
+                    <input type="text" class="form-input" id="register-display-name" required placeholder="Например: kotkotenok43">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Имя пользователя (@ник)</label>
+                    <input type="text" class="form-input" id="register-username" required placeholder="@kotkotenok43">
+                </div>
+                <button type="submit" class="btn btn-primary">Создать аккаунт</button>
+            </form>
             
-            <div class="tab-content" id="register-tab">
-                <form id="register-form">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="register-email" required placeholder="ваш@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" id="register-password" required placeholder="••••••••">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Отображаемое имя</label>
-                        <input type="text" class="form-input" id="register-display-name" required placeholder="Например: kotkotenok43">
-                        <div class="form-note">Это имя будут видеть другие пользователи</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Имя пользователя (@никнейм)</label>
-                        <input type="text" class="form-input" id="register-username" required placeholder="@kotkotenok43">
-                        <div class="form-note">Уникальный идентификатор. Начинается с @</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Создать аккаунт</button>
-                </form>
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="button" id="show-login-btn" style="background: none; border: none; color: var(--primary-light); cursor: pointer;">
+                    Уже есть аккаунт? Войти
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Upload Modal -->
     <div class="modal-overlay" id="upload-modal">
-        <div class="modal-content glass-card">
+        <div class="modal-content">
             <button class="close-modal" id="close-upload-modal">&times;</button>
-            <h2 class="modal-title">Загрузить новый трек</h2>
+            <h2 class="modal-title">Загрузить трек</h2>
             
             <form id="upload-track-form">
                 <div class="form-group">
@@ -1290,7 +988,6 @@
                         <option value="FUZZ-1.1 Pro">FUZZ-1.1 Pro</option>
                         <option value="FUZZ-1.0">FUZZ-1.0</option>
                         <option value="Коллектив">Коллектив</option>
-                        <option value="Сольный проект">Сольный проект</option>
                         <option value="Custom">Другой исполнитель...</option>
                     </select>
                     <input type="text" class="form-input mt-20 hidden" id="custom-artist" placeholder="Введите название исполнителя">
@@ -1299,24 +996,15 @@
                 <div class="form-group">
                     <label class="form-label">Ссылка на MP3 файл</label>
                     <input type="url" class="form-input" id="track-url-input" required placeholder="https://ваш-сайт.com/трек.mp3">
-                    <div class="form-note">Прямая ссылка на MP3 файл для воспроизведения</div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">Обложка (URL, необязательно)</label>
-                    <input type="url" class="form-input" id="track-cover-input" placeholder="https://ваш-сайт.com/обложка.jpg">
-                </div>
-                
-                <div style="background: rgba(0, 201, 255, 0.1); padding: 15px; border-radius: 12px; margin: 25px 0;">
-                    <p style="margin: 0; font-size: 14px; color: var(--accent-light);">
-                        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                        Трек будет отправлен на модерацию. После одобрения администратором он появится в общем плейлисте.
+                <div style="background: rgba(0, 201, 255, 0.1); padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <p style="margin: 0; font-size: 14px; color: var(--secondary);">
+                        <i class="fas fa-info-circle"></i> После проверки модератором трек появится в публичном плейлисте
                     </p>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Отправить на модерацию
-                </button>
+                <button type="submit" class="btn btn-primary">Отправить на модерацию</button>
             </form>
         </div>
     </div>
@@ -1326,12 +1014,12 @@
 
     <!-- JavaScript -->
     <script>
-        // ===================== КОНФИГУРАЦИЯ И ДАННЫЕ =====================
+        // ===================== КОНФИГУРАЦИЯ =====================
         
-        // Суперадмин (ваш аккаунт по умолчанию)
+        // Суперадмин (ваш аккаунт)
         const SUPER_ADMIN_USERNAME = "@kotkotenok43";
         
-        // Начальные данные (в реальном приложении хранятся в базе данных)
+        // Начальные данные (в реальном приложении - база данных)
         let users = JSON.parse(localStorage.getItem('kotoMusicUsers')) || [
             {
                 id: 1,
@@ -1380,7 +1068,7 @@
             }
         ];
         
-        // Текущий пользователь и состояние приложения
+        // Текущий пользователь и состояние
         let currentUser = null;
         let currentTrackIndex = 0;
         let isPlaying = false;
@@ -1401,15 +1089,14 @@
         const volumeIcon = document.getElementById('volume-icon');
         const playlistEl = document.getElementById('playlist');
         const authModal = document.getElementById('auth-modal');
+        const registerModal = document.getElementById('register-modal');
         const uploadModal = document.getElementById('upload-modal');
         
-        // ===================== ОСНОВНЫЕ ФУНКЦИИ =====================
-        
-        // Инициализация приложения
+        // ===================== ИНИЦИАЛИЗАЦИЯ =====================
         function initApp() {
             loadFromLocalStorage();
             
-            // Автовход, если есть сохранённая сессия
+            // Автоматический вход
             const savedUserId = localStorage.getItem('currentUserId');
             if (savedUserId) {
                 const user = users.find(u => u.id.toString() === savedUserId);
@@ -1426,16 +1113,12 @@
             
             setupEventListeners();
             
-            // Настройки аудио по умолчанию
+            // Настройки по умолчанию
             audioPlayer.volume = 0.7;
             volumeLevel.style.width = '70%';
-            
-            console.log("KotoMusic Glass Edition инициализирован");
         }
         
         // ===================== СИСТЕМА ПОЛЬЗОВАТЕЛЕЙ =====================
-        
-        // Регистрация нового пользователя
         function registerUser(email, password, displayName, username) {
             if (users.some(u => u.email === email)) {
                 return { success: false, message: "Пользователь с таким email уже существует" };
@@ -1470,7 +1153,6 @@
             };
         }
         
-        // Вход пользователя
         function loginUser(user) {
             currentUser = user;
             localStorage.setItem('currentUserId', user.id.toString());
@@ -1481,7 +1163,6 @@
             return true;
         }
         
-        // Выход пользователя
         function logoutUser() {
             currentUser = null;
             localStorage.removeItem('currentUserId');
@@ -1490,8 +1171,6 @@
         }
         
         // ===================== СИСТЕМА МОДЕРАЦИИ =====================
-        
-        // Одобрение пользователя
         function approveUser(userId) {
             const user = users.find(u => u.id === userId);
             if (!user) return false;
@@ -1507,28 +1186,6 @@
             return true;
         }
         
-        // Изменение прав администратора
-        function toggleAdminStatus(userId) {
-            if (!currentUser || !currentUser.isSuperAdmin) {
-                showNotification("Только суперадмин может управлять администраторами", 'error');
-                return false;
-            }
-            
-            const user = users.find(u => u.id === userId);
-            if (!user) return false;
-            
-            if (user.isSuperAdmin) {
-                showNotification("Нельзя изменить права суперадмина", 'error');
-                return false;
-            }
-            
-            user.isAdmin = !user.isAdmin;
-            saveToLocalStorage();
-            
-            return true;
-        }
-        
-        // Одобрение трека
         function approveTrack(trackId) {
             const track = tracks.find(t => t.id === trackId);
             if (!track) return false;
@@ -1540,7 +1197,6 @@
             return true;
         }
         
-        // Отклонение трека
         function rejectTrack(trackId) {
             const track = tracks.find(t => t.id === trackId);
             if (!track) return false;
@@ -1558,8 +1214,6 @@
         }
         
         // ===================== СИСТЕМА ТРЕКОВ =====================
-        
-        // Загрузка нового трека
         function uploadTrack(title, artist, url, coverUrl) {
             if (!currentUser || !currentUser.isApproved) {
                 showNotification("Только одобренные пользователи могут загружать треки", 'error');
@@ -1596,7 +1250,6 @@
             return true;
         }
         
-        // Загрузка трека в плеер
         function loadTrack(index) {
             if (tracks.length === 0) return;
             
@@ -1617,7 +1270,7 @@
             document.getElementById('artist-name').textContent = track.artist;
             
             // Обновление обложки
-            const albumArt = document.getElementById('album-art-glass');
+            const albumArt = document.getElementById('album-art');
             albumArt.style.background = `linear-gradient(135deg, ${track.coverColor || getRandomColor()}, ${getRandomColor()})`;
             albumArt.innerHTML = `<i class="${track.coverIcon || 'fas fa-music'}"></i>`;
             
@@ -1645,7 +1298,6 @@
             updateActivePlaylistItem();
         }
         
-        // Воспроизведение трека
         function playTrack() {
             if (tracks.length === 0) return;
             
@@ -1664,7 +1316,6 @@
             }
         }
         
-        // Пауза трека
         function pauseTrack() {
             isPlaying = false;
             audioPlayer.pause();
@@ -1673,7 +1324,6 @@
             document.getElementById('player-status-text').textContent = "На паузе";
         }
         
-        // Следующий трек
         function nextTrack() {
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
@@ -1693,7 +1343,6 @@
             }
         }
         
-        // Предыдущий трек
         function prevTrack() {
             const approvedTracks = tracks.filter(t => t.status === "approved");
             if (approvedTracks.length === 0) return;
@@ -1719,8 +1368,6 @@
         }
         
         // ===================== ИНТЕРФЕЙС =====================
-        
-        // Обновление интерфейса
         function updateUI() {
             const userAvatar = document.getElementById('user-avatar');
             const userDisplayName = document.getElementById('user-display-name');
@@ -1728,7 +1375,6 @@
             const authToggleBtn = document.getElementById('auth-toggle-btn');
             const adminPanel = document.getElementById('admin-panel-sidebar');
             const uploadSection = document.getElementById('upload-section-sidebar');
-            const superAdminSection = document.getElementById('super-admin-section');
             
             if (currentUser) {
                 userAvatar.textContent = currentUser.displayName.charAt(0).toUpperCase();
@@ -1736,19 +1382,11 @@
                 userDisplayName.textContent = currentUser.displayName;
                 userUsername.textContent = currentUser.username;
                 
-                authToggleBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
-                authToggleBtn.title = "Выйти";
+                authToggleBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Выйти';
                 authToggleBtn.onclick = logoutUser;
                 
                 if (currentUser.isAdmin || currentUser.isSuperAdmin) {
                     adminPanel.classList.add('visible');
-                    renderAdminPanel();
-                    
-                    if (currentUser.isSuperAdmin) {
-                        superAdminSection.classList.remove('hidden');
-                    } else {
-                        superAdminSection.classList.add('hidden');
-                    }
                 } else {
                     adminPanel.classList.remove('visible');
                 }
@@ -1764,8 +1402,7 @@
                 userDisplayName.textContent = "Гость";
                 userUsername.textContent = "@guest";
                 
-                authToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
-                authToggleBtn.title = "Войти";
+                authToggleBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
                 authToggleBtn.onclick = () => authModal.style.display = 'flex';
                 
                 adminPanel.classList.remove('visible');
@@ -1773,20 +1410,20 @@
             }
         }
         
-        // Отрисовка плейлиста
         function renderPlaylist() {
             playlistEl.innerHTML = '';
             
             const approvedTracks = tracks.filter(t => t.status === "approved");
+            
+            // Обновляем счетчик треков
+            document.getElementById('count-number').textContent = approvedTracks.length;
             
             if (approvedTracks.length === 0) {
                 playlistEl.innerHTML = `
                     <div class="text-center" style="padding: 40px 20px; color: var(--text-secondary);">
                         <i class="fas fa-music" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
                         <p style="font-size: 16px; margin-bottom: 10px;">Плейлист пуст</p>
-                        ${currentUser && currentUser.isApproved ? 
-                            '<p style="font-size: 14px; opacity: 0.7;">Загрузите первый трек!</p>' : 
-                            '<p style="font-size: 14px; opacity: 0.7;">Ожидайте загрузки треков</p>'}
+                        <p style="font-size: 14px; opacity: 0.7;">Пользователи пока не загрузили треки</p>
                     </div>
                 `;
                 return;
@@ -1800,15 +1437,13 @@
                 }
                 
                 li.innerHTML = `
-                    <div class="track-number">${(index + 1).toString().padStart(2, '0')}</div>
-                    <div class="track-cover-small" style="background: ${track.coverColor}">
+                    <div class="track-cover" style="background: ${track.coverColor}">
                         <i class="${track.coverIcon}"></i>
                     </div>
-                    <div class="track-info-small">
-                        <div class="track-title-small">${track.title}</div>
-                        <div class="track-meta-small">
-                            <span>${track.artist}</span>
-                            <span>•</span>
+                    <div class="track-info">
+                        <div class="track-name">${track.title}</div>
+                        <div class="track-meta">
+                            <span class="track-artist">${track.artist}</span>
                             <span>${track.uploaderDisplayName}</span>
                         </div>
                     </div>
@@ -1824,107 +1459,6 @@
             });
         }
         
-        // Отрисовка панели администратора
-        function renderAdminPanel() {
-            const pendingUsers = users.filter(u => !u.isApproved && !u.isSuperAdmin);
-            const pendingUsersList = document.getElementById('pending-users-list');
-            
-            if (pendingUsers.length === 0) {
-                pendingUsersList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary); font-size: 14px;">Нет пользователей на модерации</div>';
-            } else {
-                pendingUsersList.innerHTML = '';
-                pendingUsers.forEach(user => {
-                    const item = document.createElement('div');
-                    item.className = 'admin-item';
-                    item.innerHTML = `
-                        <div class="admin-user-info">
-                            <div class="user-avatar-tiny" style="background: ${user.avatarColor}">
-                                ${user.displayName.charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                                <div style="font-weight: 600; font-size: 14px;">${user.displayName}</div>
-                                <div style="font-size: 12px; color: var(--text-secondary);">${user.username}</div>
-                            </div>
-                        </div>
-                        <div class="admin-actions">
-                            <button class="action-btn approve" data-user-id="${user.id}">
-                                Одобрить
-                            </button>
-                        </div>
-                    `;
-                    pendingUsersList.appendChild(item);
-                });
-            }
-            
-            const pendingTracks = tracks.filter(t => t.status === "pending");
-            const pendingTracksList = document.getElementById('pending-tracks-list');
-            
-            if (pendingTracks.length === 0) {
-                pendingTracksList.innerHTML = '<div class="text-center" style="padding: 20px; color: var(--text-secondary); font-size: 14px;">Нет треков на модерации</div>';
-            } else {
-                pendingTracksList.innerHTML = '';
-                pendingTracks.forEach(track => {
-                    const uploader = users.find(u => u.id === track.uploaderId);
-                    const item = document.createElement('div');
-                    item.className = 'admin-item';
-                    item.innerHTML = `
-                        <div style="flex: 1;">
-                            <div style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">${track.title}</div>
-                            <div style="font-size: 12px; color: var(--text-secondary);">
-                                Исполнитель: ${track.artist} | 
-                                Автор: ${uploader ? uploader.displayName : 'Неизвестно'}
-                            </div>
-                        </div>
-                        <div class="admin-actions">
-                            <button class="action-btn approve" data-track-id="${track.id}">
-                                ✓
-                            </button>
-                            <button class="action-btn deny" data-track-id="${track.id}">
-                                ✗
-                            </button>
-                        </div>
-                    `;
-                    pendingTracksList.appendChild(item);
-                });
-            }
-            
-            if (currentUser && currentUser.isSuperAdmin) {
-                const admins = users.filter(u => u.isAdmin || u.isSuperAdmin);
-                const adminsList = document.getElementById('admins-list');
-                
-                adminsList.innerHTML = '';
-                admins.forEach(user => {
-                    const item = document.createElement('div');
-                    item.className = 'admin-item';
-                    
-                    const statusClass = user.isSuperAdmin ? 'status-admin' : 'status-approved';
-                    const statusText = user.isSuperAdmin ? 'Суперадмин' : 'Админ';
-                    
-                    item.innerHTML = `
-                        <div class="admin-user-info">
-                            <div class="user-avatar-tiny" style="background: ${user.avatarColor}">
-                                ${user.displayName.charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                                <div style="font-weight: 600; font-size: 14px;">${user.displayName}</div>
-                                <div style="font-size: 12px; color: var(--text-secondary);">${user.username}</div>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="status-badge ${statusClass}">${statusText}</span>
-                            ${!user.isSuperAdmin ? `
-                                <button class="action-btn admin mt-20" data-user-id="${user.id}" style="margin-top: 5px; font-size: 10px; padding: 4px 8px;">
-                                    ${user.isAdmin ? 'Снять' : 'Назначить'}
-                                </button>
-                            ` : ''}
-                        </div>
-                    `;
-                    adminsList.appendChild(item);
-                });
-            }
-        }
-        
-        // Обновление активного элемента в плейлисте
         function updateActivePlaylistItem() {
             const items = document.querySelectorAll('.playlist-item');
             items.forEach((item, index) => {
@@ -1937,8 +1471,6 @@
         }
         
         // ===================== УТИЛИТЫ =====================
-        
-        // Форматирование времени
         function formatTime(seconds) {
             if (isNaN(seconds)) return "0:00";
             const min = Math.floor(seconds / 60);
@@ -1946,17 +1478,14 @@
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
         
-        // Генерация случайного цвета
         function getRandomColor() {
             const colors = [
                 '#6c5ce7', '#00c9ff', '#ff6b6b', '#a29bfe', 
-                '#fd79a8', '#00b894', '#fdcb6e', '#636e72',
-                '#0984e3', '#00cec9', '#a29bfe', '#fd79a8'
+                '#fd79a8', '#00b894', '#fdcb6e', '#636e72'
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
         
-        // Показать уведомление
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.style.cssText = `
@@ -1968,14 +1497,12 @@
                            type === 'error' ? 'rgba(255, 107, 107, 0.9)' : 
                            'rgba(108, 92, 231, 0.9)'};
                 color: white;
-                border-radius: 12px;
+                border-radius: 10px;
                 z-index: 10000;
                 font-weight: 600;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                 animation: slideIn 0.3s ease;
                 max-width: 300px;
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
             `;
             notification.textContent = message;
             
@@ -1991,13 +1518,11 @@
             }, 3000);
         }
         
-        // Сохранение данных в localStorage
         function saveToLocalStorage() {
             localStorage.setItem('kotoMusicUsers', JSON.stringify(users));
             localStorage.setItem('kotoMusicTracks', JSON.stringify(tracks));
         }
         
-        // Загрузка данных из localStorage
         function loadFromLocalStorage() {
             const savedUsers = localStorage.getItem('kotoMusicUsers');
             const savedTracks = localStorage.getItem('kotoMusicTracks');
@@ -2006,8 +1531,7 @@
             if (savedTracks) tracks = JSON.parse(savedTracks);
         }
         
-        // ===================== НАСТРОЙКА СОБЫТИЙ =====================
-        
+        // ===================== СОБЫТИЯ =====================
         function setupEventListeners() {
             // Аудиоплеер
             audioPlayer.addEventListener('timeupdate', () => {
@@ -2018,7 +1542,7 @@
             
             audioPlayer.addEventListener('ended', nextTrack);
             
-            // Управление воспроизведением
+            // Управление
             playPauseBtn.addEventListener('click', () => {
                 if (isPlaying) {
                     pauseTrack();
@@ -2070,6 +1594,10 @@
                 authModal.style.display = 'none';
             });
             
+            document.getElementById('close-register-modal').addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+            
             document.getElementById('close-upload-modal').addEventListener('click', () => {
                 uploadModal.style.display = 'none';
             });
@@ -2078,19 +1606,15 @@
                 uploadModal.style.display = 'flex';
             });
             
-            // Вкладки
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
+            // Переключение между формами
+            document.getElementById('show-register-btn').addEventListener('click', () => {
+                authModal.style.display = 'none';
+                registerModal.style.display = 'flex';
+            });
+            
+            document.getElementById('show-login-btn').addEventListener('click', () => {
+                registerModal.style.display = 'none';
+                authModal.style.display = 'flex';
             });
             
             // Форма входа
@@ -2128,19 +1652,8 @@
                 const result = registerUser(email, password, displayName, username);
                 
                 if (result.success) {
-                    authModal.style.display = 'none';
+                    registerModal.style.display = 'none';
                     document.getElementById('register-form').reset();
-                    
-                    if (username === SUPER_ADMIN_USERNAME) {
-                        const user = users.find(u => u.username === username);
-                        if (user) {
-                            user.isSuperAdmin = true;
-                            user.isAdmin = true;
-                            user.isApproved = true;
-                            saveToLocalStorage();
-                            updateUI();
-                        }
-                    }
                 } else {
                     showNotification(result.message, 'error');
                 }
@@ -2155,12 +1668,10 @@
                     ? document.getElementById('custom-artist').value 
                     : document.getElementById('artist-select').value;
                 const url = document.getElementById('track-url-input').value;
-                const coverUrl = document.getElementById('track-cover-input').value;
                 
-                if (uploadTrack(title, artist, url, coverUrl)) {
+                if (uploadTrack(title, artist, url)) {
                     uploadModal.style.display = 'none';
                     document.getElementById('upload-track-form').reset();
-                    renderAdminPanel();
                 }
             });
             
@@ -2173,86 +1684,12 @@
                     customInput.classList.add('hidden');
                 }
             });
-            
-            // Делегирование событий для панели администратора
-            document.addEventListener('click', (e) => {
-                // Одобрение пользователя
-                if (e.target.classList.contains('approve') && e.target.hasAttribute('data-user-id')) {
-                    const userId = parseInt(e.target.getAttribute('data-user-id'));
-                    if (approveUser(userId)) {
-                        showNotification("Пользователь одобрен", 'success');
-                        renderAdminPanel();
-                        updateUI();
-                    }
-                }
-                
-                // Управление администраторами
-                if (e.target.classList.contains('admin') && e.target.hasAttribute('data-user-id')) {
-                    const userId = parseInt(e.target.getAttribute('data-user-id'));
-                    if (toggleAdminStatus(userId)) {
-                        showNotification("Права администратора изменены", 'success');
-                        renderAdminPanel();
-                    }
-                }
-                
-                // Модерация треков
-                if (e.target.classList.contains('approve') && e.target.hasAttribute('data-track-id')) {
-                    const trackId = parseInt(e.target.getAttribute('data-track-id'));
-                    if (approveTrack(trackId)) {
-                        showNotification("Трек одобрен", 'success');
-                        renderAdminPanel();
-                    }
-                }
-                
-                if (e.target.classList.contains('deny') && e.target.hasAttribute('data-track-id')) {
-                    const trackId = parseInt(e.target.getAttribute('data-track-id'));
-                    if (rejectTrack(trackId)) {
-                        showNotification("Трек отклонен", 'info');
-                        renderAdminPanel();
-                    }
-                }
-            });
-            
-            // Горячие клавиши
-            document.addEventListener('keydown', (e) => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                
-                switch(e.code) {
-                    case 'Space':
-                        e.preventDefault();
-                        if (isPlaying) {
-                            pauseTrack();
-                        } else {
-                            playTrack();
-                        }
-                        break;
-                    case 'ArrowRight':
-                        if (e.ctrlKey) {
-                            e.preventDefault();
-                            nextTrack();
-                        }
-                        break;
-                    case 'ArrowLeft':
-                        if (e.ctrlKey) {
-                            e.preventDefault();
-                            prevTrack();
-                        }
-                        break;
-                    case 'KeyU':
-                        if (e.ctrlKey && currentUser && currentUser.isApproved) {
-                            e.preventDefault();
-                            uploadModal.style.display = 'flex';
-                        }
-                        break;
-                }
-            });
         }
         
-        // ===================== ЗАПУСК ПРИЛОЖЕНИЯ =====================
-        
+        // ===================== ЗАПУСК =====================
         document.addEventListener('DOMContentLoaded', initApp);
         
-        // Добавление CSS анимаций
+        // CSS анимации
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
